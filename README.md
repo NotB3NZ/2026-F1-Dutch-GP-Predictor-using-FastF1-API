@@ -42,11 +42,11 @@ Because the model drops DNF results during training (to learn pure pace), it use
 
 ## 🏁 Act 2 — Zandvoort Track Dominance
 
-**Goal:** Compare Lando Norris vs. Max Verstappen (pole-sitter vs. track specialist) using fastest-lap telemetry purely from the 2026 Zandvoort Qualifying session.
+**Goal:** Compare Lando Norris vs. George Russell (front-row starters) using fastest-lap telemetry purely from the 2026 Zandvoort Qualifying session.
 
-**Key insight:** By analyzing 2026 telemetry (instead of historical 2023-2025 data), we identified exactly where Norris was pulling ahead of Verstappen on the current weekend to secure pole position.
+**Key insight:** By analyzing 2026 telemetry, we identified exactly where Norris was pulling ahead of Russell on the current weekend to secure pole position.
 
-![Track Dominance Map](outputs/act2_track_dominance_NOR_vs_VER_Q.png)
+![Track Dominance Map](outputs/act2_track_dominance_NOR_vs_RUS_Q.png)
 *Track dominance map highlighting which driver was faster in micro-segments of the track.*
 
 ---

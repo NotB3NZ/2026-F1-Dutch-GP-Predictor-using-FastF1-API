@@ -47,7 +47,7 @@ logger = logging.getLogger(__name__)
 # ----------------------------------------------------------
 
 DRIVER_1 = "NOR"  # Pole position holder
-DRIVER_2 = "VER"  # Zandvoort specialist (won 2023)
+DRIVER_2 = "RUS"  # Zandvoort specialist (won 2023)
 EVENT_NAME = "Dutch Grand Prix"
 
 
