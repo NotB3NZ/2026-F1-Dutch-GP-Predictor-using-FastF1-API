@@ -1,0 +1,243 @@
+Abbreviation,DriverNumber,TeamName,GridPosition,Position,Status,RoundNumber,EventName,IsDNF,PositionsGained
+RUS,63,Mercedes,1.0,1.0,Finished,1,Australian Grand Prix,False,0.0
+ANT,12,Mercedes,2.0,2.0,Finished,1,Australian Grand Prix,False,0.0
+LEC,16,Ferrari,4.0,3.0,Finished,1,Australian Grand Prix,False,1.0
+HAM,44,Ferrari,7.0,4.0,Finished,1,Australian Grand Prix,False,3.0
+NOR,1,McLaren,6.0,5.0,Finished,1,Australian Grand Prix,False,1.0
+VER,3,Red Bull Racing,20.0,6.0,Finished,1,Australian Grand Prix,False,14.0
+BEA,87,Haas F1 Team,12.0,7.0,Lapped,1,Australian Grand Prix,False,5.0
+LIN,41,Racing Bulls,9.0,8.0,Lapped,1,Australian Grand Prix,False,1.0
+BOR,5,Audi,10.0,9.0,Lapped,1,Australian Grand Prix,False,1.0
+GAS,10,Alpine,14.0,10.0,Lapped,1,Australian Grand Prix,False,4.0
+OCO,31,Haas F1 Team,13.0,11.0,Lapped,1,Australian Grand Prix,False,2.0
+ALB,23,Williams,15.0,12.0,Lapped,1,Australian Grand Prix,False,3.0
+LAW,30,Racing Bulls,8.0,13.0,Lapped,1,Australian Grand Prix,False,-5.0
+COL,43,Alpine,16.0,14.0,Lapped,1,Australian Grand Prix,False,2.0
+SAI,55,Williams,21.0,15.0,Lapped,1,Australian Grand Prix,False,6.0
+PER,11,Cadillac,18.0,16.0,Lapped,1,Australian Grand Prix,False,2.0
+STR,18,Aston Martin,22.0,17.0,Lapped,1,Australian Grand Prix,False,5.0
+ALO,14,Aston Martin,17.0,18.0,Retired,1,Australian Grand Prix,True,
+BOT,77,Cadillac,19.0,19.0,Retired,1,Australian Grand Prix,True,
+HAD,6,Red Bull Racing,3.0,20.0,Retired,1,Australian Grand Prix,True,
+PIA,81,McLaren,5.0,21.0,Did not start,1,Australian Grand Prix,False,-16.0
+HUL,27,Audi,11.0,22.0,Did not start,1,Australian Grand Prix,False,-11.0
+ANT,12,Mercedes,1.0,1.0,Finished,2,Chinese Grand Prix,False,0.0
+RUS,63,Mercedes,2.0,2.0,Finished,2,Chinese Grand Prix,False,0.0
+HAM,44,Ferrari,3.0,3.0,Finished,2,Chinese Grand Prix,False,0.0
+LEC,16,Ferrari,4.0,4.0,Finished,2,Chinese Grand Prix,False,0.0
+BEA,87,Haas F1 Team,10.0,5.0,Finished,2,Chinese Grand Prix,False,5.0
+GAS,10,Alpine,7.0,6.0,Finished,2,Chinese Grand Prix,False,1.0
+LAW,30,Racing Bulls,14.0,7.0,Finished,2,Chinese Grand Prix,False,7.0
+HAD,6,Red Bull Racing,9.0,8.0,Finished,2,Chinese Grand Prix,False,1.0
+SAI,55,Williams,17.0,9.0,Lapped,2,Chinese Grand Prix,False,8.0
+COL,43,Alpine,12.0,10.0,Lapped,2,Chinese Grand Prix,False,2.0
+HUL,27,Audi,11.0,11.0,Lapped,2,Chinese Grand Prix,False,0.0
+LIN,41,Racing Bulls,15.0,12.0,Lapped,2,Chinese Grand Prix,False,3.0
+BOT,77,Cadillac,19.0,13.0,Lapped,2,Chinese Grand Prix,False,6.0
+OCO,31,Haas F1 Team,13.0,14.0,Lapped,2,Chinese Grand Prix,False,-1.0
+PER,11,Cadillac,21.0,15.0,Lapped,2,Chinese Grand Prix,False,6.0
+VER,3,Red Bull Racing,8.0,16.0,Retired,2,Chinese Grand Prix,True,
+ALO,14,Aston Martin,18.0,17.0,Retired,2,Chinese Grand Prix,True,
+STR,18,Aston Martin,20.0,18.0,Retired,2,Chinese Grand Prix,True,
+PIA,81,McLaren,5.0,19.0,Did not start,2,Chinese Grand Prix,False,-14.0
+NOR,1,McLaren,6.0,20.0,Did not start,2,Chinese Grand Prix,False,-14.0
+BOR,5,Audi,16.0,21.0,Did not start,2,Chinese Grand Prix,False,-5.0
+ALB,23,Williams,22.0,22.0,Did not start,2,Chinese Grand Prix,False,0.0
+ANT,12,Mercedes,1.0,1.0,Finished,3,Japanese Grand Prix,False,0.0
+PIA,81,McLaren,3.0,2.0,Finished,3,Japanese Grand Prix,False,1.0
+LEC,16,Ferrari,4.0,3.0,Finished,3,Japanese Grand Prix,False,1.0
+RUS,63,Mercedes,2.0,4.0,Finished,3,Japanese Grand Prix,False,-2.0
+NOR,1,McLaren,5.0,5.0,Finished,3,Japanese Grand Prix,False,0.0
+HAM,44,Ferrari,6.0,6.0,Finished,3,Japanese Grand Prix,False,0.0
+GAS,10,Alpine,7.0,7.0,Finished,3,Japanese Grand Prix,False,0.0
+VER,3,Red Bull Racing,11.0,8.0,Finished,3,Japanese Grand Prix,False,3.0
+LAW,30,Racing Bulls,14.0,9.0,Finished,3,Japanese Grand Prix,False,5.0
+OCO,31,Haas F1 Team,12.0,10.0,Finished,3,Japanese Grand Prix,False,2.0
+HUL,27,Audi,13.0,11.0,Finished,3,Japanese Grand Prix,False,2.0
+HAD,6,Red Bull Racing,8.0,12.0,Finished,3,Japanese Grand Prix,False,-4.0
+BOR,5,Audi,9.0,13.0,Finished,3,Japanese Grand Prix,False,-4.0
+LIN,41,Racing Bulls,10.0,14.0,Finished,3,Japanese Grand Prix,False,-4.0
+SAI,55,Williams,16.0,15.0,Finished,3,Japanese Grand Prix,False,1.0
+COL,43,Alpine,15.0,16.0,Finished,3,Japanese Grand Prix,False,-1.0
+PER,11,Cadillac,19.0,17.0,Finished,3,Japanese Grand Prix,False,2.0
+ALO,14,Aston Martin,21.0,18.0,Lapped,3,Japanese Grand Prix,False,3.0
+BOT,77,Cadillac,20.0,19.0,Lapped,3,Japanese Grand Prix,False,1.0
+ALB,23,Williams,17.0,20.0,Lapped,3,Japanese Grand Prix,False,-3.0
+STR,18,Aston Martin,22.0,21.0,Retired,3,Japanese Grand Prix,True,
+BEA,87,Haas F1 Team,18.0,22.0,Retired,3,Japanese Grand Prix,True,
+ANT,12,Mercedes,1.0,1.0,Finished,4,Miami Grand Prix,False,0.0
+NOR,1,McLaren,4.0,2.0,Finished,4,Miami Grand Prix,False,2.0
+PIA,81,McLaren,7.0,3.0,Finished,4,Miami Grand Prix,False,4.0
+RUS,63,Mercedes,5.0,4.0,Finished,4,Miami Grand Prix,False,1.0
+VER,3,Red Bull Racing,2.0,5.0,Finished,4,Miami Grand Prix,False,-3.0
+HAM,44,Ferrari,6.0,6.0,Finished,4,Miami Grand Prix,False,0.0
+COL,43,Alpine,8.0,7.0,Finished,4,Miami Grand Prix,False,1.0
+LEC,16,Ferrari,3.0,8.0,Finished,4,Miami Grand Prix,False,-5.0
+SAI,55,Williams,13.0,9.0,Finished,4,Miami Grand Prix,False,4.0
+ALB,23,Williams,15.0,10.0,Finished,4,Miami Grand Prix,False,5.0
+BEA,87,Haas F1 Team,12.0,11.0,Lapped,4,Miami Grand Prix,False,1.0
+BOR,5,Audi,21.0,12.0,Lapped,4,Miami Grand Prix,False,9.0
+OCO,31,Haas F1 Team,14.0,13.0,Lapped,4,Miami Grand Prix,False,1.0
+LIN,41,Racing Bulls,16.0,14.0,Lapped,4,Miami Grand Prix,False,2.0
+ALO,14,Aston Martin,17.0,15.0,Lapped,4,Miami Grand Prix,False,2.0
+PER,11,Cadillac,20.0,16.0,Lapped,4,Miami Grand Prix,False,4.0
+STR,18,Aston Martin,18.0,17.0,Lapped,4,Miami Grand Prix,False,1.0
+BOT,77,Cadillac,19.0,18.0,Lapped,4,Miami Grand Prix,False,1.0
+HUL,27,Audi,10.0,19.0,Retired,4,Miami Grand Prix,True,
+LAW,30,Racing Bulls,11.0,20.0,Retired,4,Miami Grand Prix,True,
+GAS,10,Alpine,9.0,21.0,Retired,4,Miami Grand Prix,True,
+HAD,6,Red Bull Racing,22.0,22.0,Retired,4,Miami Grand Prix,True,
+ANT,12,Mercedes,2.0,1.0,Finished,5,Canadian Grand Prix,False,1.0
+HAM,44,Ferrari,5.0,2.0,Finished,5,Canadian Grand Prix,False,3.0
+VER,3,Red Bull Racing,6.0,3.0,Finished,5,Canadian Grand Prix,False,3.0
+LEC,16,Ferrari,8.0,4.0,Finished,5,Canadian Grand Prix,False,4.0
+HAD,6,Red Bull Racing,7.0,5.0,Lapped,5,Canadian Grand Prix,False,2.0
+COL,43,Alpine,10.0,6.0,Lapped,5,Canadian Grand Prix,False,4.0
+LAW,30,Racing Bulls,12.0,7.0,Lapped,5,Canadian Grand Prix,False,5.0
+GAS,10,Alpine,14.0,8.0,Lapped,5,Canadian Grand Prix,False,6.0
+SAI,55,Williams,15.0,9.0,Lapped,5,Canadian Grand Prix,False,6.0
+BEA,87,Haas F1 Team,16.0,10.0,Lapped,5,Canadian Grand Prix,False,6.0
+PIA,81,McLaren,4.0,11.0,Lapped,5,Canadian Grand Prix,False,-7.0
+HUL,27,Audi,11.0,12.0,Lapped,5,Canadian Grand Prix,False,-1.0
+BOR,5,Audi,13.0,13.0,Lapped,5,Canadian Grand Prix,False,0.0
+OCO,31,Haas F1 Team,17.0,14.0,Lapped,5,Canadian Grand Prix,False,3.0
+STR,18,Aston Martin,22.0,15.0,Lapped,5,Canadian Grand Prix,False,7.0
+BOT,77,Cadillac,21.0,16.0,Lapped,5,Canadian Grand Prix,False,5.0
+PER,11,Cadillac,20.0,17.0,Retired,5,Canadian Grand Prix,True,
+NOR,1,McLaren,3.0,18.0,Retired,5,Canadian Grand Prix,True,
+RUS,63,Mercedes,1.0,19.0,Retired,5,Canadian Grand Prix,True,
+ALO,14,Aston Martin,19.0,20.0,Retired,5,Canadian Grand Prix,True,
+ALB,23,Williams,18.0,21.0,Retired,5,Canadian Grand Prix,True,
+LIN,41,Racing Bulls,9.0,22.0,Did not start,5,Canadian Grand Prix,False,-13.0
+ANT,12,Mercedes,1.0,1.0,Finished,6,Monaco Grand Prix,False,0.0
+HAM,44,Ferrari,3.0,2.0,Finished,6,Monaco Grand Prix,False,1.0
+GAS,10,Alpine,9.0,3.0,Finished,6,Monaco Grand Prix,False,6.0
+HAD,6,Red Bull Racing,5.0,4.0,Finished,6,Monaco Grand Prix,False,1.0
+PIA,81,McLaren,7.0,5.0,Finished,6,Monaco Grand Prix,False,2.0
+LAW,30,Racing Bulls,10.0,6.0,Finished,6,Monaco Grand Prix,False,4.0
+LIN,41,Racing Bulls,15.0,7.0,Finished,6,Monaco Grand Prix,False,8.0
+ALB,23,Williams,11.0,8.0,Finished,6,Monaco Grand Prix,False,3.0
+OCO,31,Haas F1 Team,17.0,9.0,Finished,6,Monaco Grand Prix,False,8.0
+ALO,14,Aston Martin,21.0,10.0,Finished,6,Monaco Grand Prix,False,11.0
+BOR,5,Audi,16.0,11.0,Finished,6,Monaco Grand Prix,False,5.0
+RUS,63,Mercedes,6.0,12.0,Finished,6,Monaco Grand Prix,False,-6.0
+HUL,27,Audi,13.0,13.0,Finished,6,Monaco Grand Prix,False,0.0
+COL,43,Alpine,14.0,14.0,Finished,6,Monaco Grand Prix,False,0.0
+PER,11,Cadillac,18.0,15.0,Finished,6,Monaco Grand Prix,False,3.0
+SAI,55,Williams,12.0,16.0,Retired,6,Monaco Grand Prix,True,
+LEC,16,Ferrari,4.0,17.0,Retired,6,Monaco Grand Prix,True,
+STR,18,Aston Martin,22.0,18.0,Retired,6,Monaco Grand Prix,True,
+NOR,1,McLaren,8.0,19.0,Retired,6,Monaco Grand Prix,True,
+BEA,87,Haas F1 Team,19.0,20.0,Retired,6,Monaco Grand Prix,True,
+BOT,77,Cadillac,20.0,21.0,Retired,6,Monaco Grand Prix,True,
+VER,3,Red Bull Racing,2.0,22.0,Retired,6,Monaco Grand Prix,True,
+HAM,44,Ferrari,2.0,1.0,Finished,7,Barcelona Grand Prix,False,1.0
+RUS,63,Mercedes,1.0,2.0,Finished,7,Barcelona Grand Prix,False,-1.0
+NOR,1,McLaren,4.0,3.0,Finished,7,Barcelona Grand Prix,False,1.0
+VER,3,Red Bull Racing,5.0,4.0,Finished,7,Barcelona Grand Prix,False,1.0
+PIA,81,McLaren,7.0,5.0,Finished,7,Barcelona Grand Prix,False,2.0
+HAD,6,Red Bull Racing,6.0,6.0,Lapped,7,Barcelona Grand Prix,False,0.0
+GAS,10,Alpine,14.0,7.0,Lapped,7,Barcelona Grand Prix,False,7.0
+LAW,30,Racing Bulls,8.0,8.0,Lapped,7,Barcelona Grand Prix,False,0.0
+LIN,41,Racing Bulls,11.0,9.0,Lapped,7,Barcelona Grand Prix,False,2.0
+COL,43,Alpine,13.0,10.0,Lapped,7,Barcelona Grand Prix,False,3.0
+BOR,5,Audi,12.0,11.0,Lapped,7,Barcelona Grand Prix,False,1.0
+SAI,55,Williams,16.0,12.0,Lapped,7,Barcelona Grand Prix,False,4.0
+OCO,31,Haas F1 Team,17.0,13.0,Lapped,7,Barcelona Grand Prix,False,4.0
+PER,11,Cadillac,19.0,14.0,Lapped,7,Barcelona Grand Prix,False,5.0
+LEC,16,Ferrari,10.0,15.0,Retired,7,Barcelona Grand Prix,True,
+ANT,12,Mercedes,3.0,16.0,Retired,7,Barcelona Grand Prix,True,
+BEA,87,Haas F1 Team,15.0,17.0,Retired,7,Barcelona Grand Prix,True,
+ALB,23,Williams,18.0,18.0,Lapped,7,Barcelona Grand Prix,False,0.0
+ALO,14,Aston Martin,22.0,19.0,Retired,7,Barcelona Grand Prix,True,
+HUL,27,Audi,9.0,20.0,Retired,7,Barcelona Grand Prix,True,
+BOT,77,Cadillac,20.0,21.0,Retired,7,Barcelona Grand Prix,True,
+STR,18,Aston Martin,21.0,22.0,Retired,7,Barcelona Grand Prix,True,
+RUS,63,Mercedes,1.0,1.0,Finished,8,Austrian Grand Prix,False,0.0
+VER,3,Red Bull Racing,5.0,2.0,Finished,8,Austrian Grand Prix,False,3.0
+ANT,12,Mercedes,4.0,3.0,Finished,8,Austrian Grand Prix,False,1.0
+PIA,81,McLaren,7.0,4.0,Finished,8,Austrian Grand Prix,False,3.0
+HAM,44,Ferrari,3.0,5.0,Finished,8,Austrian Grand Prix,False,-2.0
+HAD,6,Red Bull Racing,8.0,6.0,Finished,8,Austrian Grand Prix,False,2.0
+NOR,1,McLaren,6.0,7.0,Finished,8,Austrian Grand Prix,False,-1.0
+LEC,16,Ferrari,2.0,8.0,Finished,8,Austrian Grand Prix,False,-6.0
+LAW,30,Racing Bulls,9.0,9.0,Lapped,8,Austrian Grand Prix,False,0.0
+LIN,41,Racing Bulls,10.0,10.0,Lapped,8,Austrian Grand Prix,False,0.0
+BOR,5,Audi,12.0,11.0,Lapped,8,Austrian Grand Prix,False,1.0
+HUL,27,Audi,14.0,12.0,Lapped,8,Austrian Grand Prix,False,2.0
+GAS,10,Alpine,11.0,13.0,Lapped,8,Austrian Grand Prix,False,-2.0
+BEA,87,Haas F1 Team,13.0,14.0,Lapped,8,Austrian Grand Prix,False,-1.0
+COL,43,Alpine,16.0,15.0,Lapped,8,Austrian Grand Prix,False,1.0
+OCO,31,Haas F1 Team,15.0,16.0,Lapped,8,Austrian Grand Prix,False,-1.0
+ALB,23,Williams,18.0,17.0,Lapped,8,Austrian Grand Prix,False,1.0
+ALO,14,Aston Martin,21.0,18.0,Lapped,8,Austrian Grand Prix,False,3.0
+STR,18,Aston Martin,22.0,19.0,Retired,8,Austrian Grand Prix,True,
+SAI,55,Williams,17.0,20.0,Retired,8,Austrian Grand Prix,True,
+PER,11,Cadillac,19.0,21.0,Retired,8,Austrian Grand Prix,True,
+BOT,77,Cadillac,20.0,22.0,Retired,8,Austrian Grand Prix,True,
+LEC,16,Ferrari,2.0,1.0,Finished,9,British Grand Prix,False,1.0
+RUS,63,Mercedes,4.0,2.0,Finished,9,British Grand Prix,False,2.0
+HAM,44,Ferrari,3.0,3.0,Finished,9,British Grand Prix,False,0.0
+NOR,1,McLaren,6.0,4.0,Finished,9,British Grand Prix,False,2.0
+HAD,6,Red Bull Racing,5.0,5.0,Finished,9,British Grand Prix,False,0.0
+LAW,30,Racing Bulls,10.0,6.0,Finished,9,British Grand Prix,False,4.0
+LIN,41,Racing Bulls,9.0,7.0,Finished,9,British Grand Prix,False,2.0
+BOR,5,Audi,11.0,8.0,Finished,9,British Grand Prix,False,3.0
+COL,43,Alpine,19.0,9.0,Finished,9,British Grand Prix,False,10.0
+GAS,10,Alpine,15.0,10.0,Finished,9,British Grand Prix,False,5.0
+PIA,81,McLaren,8.0,11.0,Finished,9,British Grand Prix,False,-3.0
+BEA,87,Haas F1 Team,13.0,12.0,Finished,9,British Grand Prix,False,1.0
+OCO,31,Haas F1 Team,17.0,13.0,Finished,9,British Grand Prix,False,4.0
+PER,11,Cadillac,20.0,14.0,Finished,9,British Grand Prix,False,6.0
+ANT,12,Mercedes,1.0,15.0,Finished,9,British Grand Prix,False,-14.0
+BOT,77,Cadillac,18.0,16.0,Finished,9,British Grand Prix,False,2.0
+SAI,55,Williams,14.0,17.0,Lapped,9,British Grand Prix,False,-3.0
+ALO,14,Aston Martin,21.0,18.0,Lapped,9,British Grand Prix,False,3.0
+STR,18,Aston Martin,22.0,19.0,Lapped,9,British Grand Prix,False,3.0
+VER,3,Red Bull Racing,7.0,20.0,Retired,9,British Grand Prix,True,
+ALB,23,Williams,16.0,21.0,Retired,9,British Grand Prix,True,
+HUL,27,Audi,12.0,22.0,Retired,9,British Grand Prix,True,
+ANT,12,Mercedes,1.0,1.0,Finished,10,Belgian Grand Prix,False,0.0
+LEC,16,Ferrari,4.0,2.0,Finished,10,Belgian Grand Prix,False,2.0
+VER,3,Red Bull Racing,2.0,3.0,Finished,10,Belgian Grand Prix,False,-1.0
+HAM,44,Ferrari,5.0,4.0,Finished,10,Belgian Grand Prix,False,1.0
+PIA,81,McLaren,6.0,5.0,Finished,10,Belgian Grand Prix,False,1.0
+HAD,6,Red Bull Racing,21.0,6.0,Finished,10,Belgian Grand Prix,False,15.0
+NOR,1,McLaren,13.0,7.0,Finished,10,Belgian Grand Prix,False,6.0
+BOR,5,Audi,8.0,8.0,Finished,10,Belgian Grand Prix,False,0.0
+LIN,41,Racing Bulls,7.0,9.0,Finished,10,Belgian Grand Prix,False,-2.0
+COL,43,Alpine,11.0,10.0,Finished,10,Belgian Grand Prix,False,1.0
+GAS,10,Alpine,10.0,11.0,Finished,10,Belgian Grand Prix,False,-1.0
+LAW,30,Racing Bulls,9.0,12.0,Finished,10,Belgian Grand Prix,False,-3.0
+HUL,27,Audi,12.0,13.0,Finished,10,Belgian Grand Prix,False,-1.0
+BEA,87,Haas F1 Team,14.0,14.0,Finished,10,Belgian Grand Prix,False,0.0
+ALB,23,Williams,15.0,15.0,Finished,10,Belgian Grand Prix,False,0.0
+SAI,55,Williams,19.0,16.0,Finished,10,Belgian Grand Prix,False,3.0
+OCO,31,Haas F1 Team,16.0,17.0,Finished,10,Belgian Grand Prix,False,-1.0
+BOT,77,Cadillac,17.0,18.0,Lapped,10,Belgian Grand Prix,False,-1.0
+ALO,14,Aston Martin,22.0,19.0,Lapped,10,Belgian Grand Prix,False,3.0
+STR,18,Aston Martin,20.0,20.0,Retired,10,Belgian Grand Prix,True,
+PER,11,Cadillac,18.0,21.0,Retired,10,Belgian Grand Prix,True,
+RUS,63,Mercedes,3.0,22.0,Retired,10,Belgian Grand Prix,True,
+NOR,1,McLaren,1.0,1.0,Finished,11,Hungarian Grand Prix,False,0.0
+VER,3,Red Bull Racing,4.0,2.0,Finished,11,Hungarian Grand Prix,False,2.0
+ANT,12,Mercedes,7.0,3.0,Finished,11,Hungarian Grand Prix,False,4.0
+LEC,16,Ferrari,2.0,4.0,Finished,11,Hungarian Grand Prix,False,-2.0
+HAM,44,Ferrari,5.0,5.0,Finished,11,Hungarian Grand Prix,False,0.0
+HAD,6,Red Bull Racing,8.0,6.0,Finished,11,Hungarian Grand Prix,False,2.0
+RUS,63,Mercedes,6.0,7.0,Finished,11,Hungarian Grand Prix,False,-1.0
+LAW,30,Racing Bulls,11.0,8.0,Lapped,11,Hungarian Grand Prix,False,3.0
+HUL,27,Audi,10.0,9.0,Lapped,11,Hungarian Grand Prix,False,1.0
+LIN,41,Racing Bulls,9.0,10.0,Lapped,11,Hungarian Grand Prix,False,-1.0
+BOR,5,Audi,14.0,11.0,Lapped,11,Hungarian Grand Prix,False,3.0
+GAS,10,Alpine,12.0,12.0,Lapped,11,Hungarian Grand Prix,False,0.0
+STR,18,Aston Martin,20.0,13.0,Lapped,11,Hungarian Grand Prix,False,7.0
+ALO,14,Aston Martin,16.0,14.0,Lapped,11,Hungarian Grand Prix,False,2.0
+COL,43,Alpine,13.0,15.0,Lapped,11,Hungarian Grand Prix,False,-2.0
+OCO,31,Haas F1 Team,15.0,16.0,Lapped,11,Hungarian Grand Prix,False,-1.0
+ALB,23,Williams,19.0,17.0,Lapped,11,Hungarian Grand Prix,False,2.0
+SAI,55,Williams,18.0,18.0,Lapped,11,Hungarian Grand Prix,False,0.0
+BEA,87,Haas F1 Team,17.0,19.0,Lapped,11,Hungarian Grand Prix,False,-2.0
+PIA,81,McLaren,3.0,20.0,Retired,11,Hungarian Grand Prix,True,
+PER,11,Cadillac,22.0,21.0,Retired,11,Hungarian Grand Prix,True,
+BOT,77,Cadillac,21.0,22.0,Retired,11,Hungarian Grand Prix,True,

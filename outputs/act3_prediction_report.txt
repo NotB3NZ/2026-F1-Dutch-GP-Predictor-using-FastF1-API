@@ -1,0 +1,78 @@
+======================================================================
+  🏁 2026 DUTCH GRAND PRIX — RACE PREDICTION REPORT
+  Generated: 2026-08-23 23:29
+  Model: Random Forest + Linear Regression Ensemble
+  Training: 2026 Season, Rounds 1–11 (11 races)
+======================================================================
+
+PREDICTED PODIUM
+----------------------------------------------------------------------
+  🥇 P1: Lando Norris (McLaren) — Grid P1 (+0)
+  🥈 P2: George Russell (Mercedes) — Grid P2 (+0)
+  🥉 P3: Kimi Antonelli (Mercedes) — Grid P3 (+0)
+
+FULL PREDICTED FINISHING ORDER
+----------------------------------------------------------------------
+  P 1: Lando Norris           (McLaren           ) Grid P 1 (+0)
+  P 2: George Russell         (Mercedes          ) Grid P 2 (+0)
+  P 3: Kimi Antonelli         (Mercedes          ) Grid P 3 (+0)
+  P 4: Oscar Piastri          (McLaren           ) Grid P 4 (+0)
+  P 5: Lewis Hamilton         (Ferrari           ) Grid P 5 (+0)
+  P 6: Max Verstappen         (Red Bull Racing   ) Grid P 7 (+1) ⚠ DNF risk
+  P 7: Charles Leclerc        (Ferrari           ) Grid P 6 (-1)
+  P 8: Liam Lawson            (Red Bull Racing   ) Grid P 8 (+0) ⚠ DNF risk
+  P 9: Arvid Lindblad         (Racing Bulls      ) Grid P10 (+1)
+  P10: Gabriel Bortoleto      (Audi              ) Grid P 9 (-1)
+  P11: Pierre Gasly           (Alpine            ) Grid P11 (+0)
+  P12: Yuki Tsunoda           (Racing Bulls      ) Grid P12 (+0)
+  P13: Nico Hulkenberg        (Audi              ) Grid P13 (+0)
+  P14: Franco Colapinto       (Alpine            ) Grid P14 (+0)
+  P15: Esteban Ocon           (Haas F1 Team      ) Grid P15 (+0)
+  P16: Alex Albon             (Williams          ) Grid P16 (+0) ⚠ DNF risk
+  P17: Carlos Sainz           (Williams          ) Grid P17 (+0) ⚠ DNF risk
+  P18: Oliver Bearman         (Haas F1 Team      ) Grid P20 (+2)
+  P19: Fernando Alonso        (Aston Martin      ) Grid P18 (-1) ⚠ DNF risk
+  P20: Lance Stroll           (Aston Martin      ) Grid P19 (-1) ⚠ DNF risk
+  P21: Valtteri Bottas        (Cadillac          ) Grid P21 (+0) ⚠ DNF risk
+  P22: Sergio Pérez           (Cadillac          ) Grid P22 (+0) ⚠ DNF risk
+
+MODEL CONFIDENCE (Leave-One-Round-Out Cross-Validation)
+----------------------------------------------------------------------
+  MAE:  2.82 positions (average prediction error)
+  RMSE: 3.80 positions
+  R²:   0.528
+  Within ±1 position: 19%
+  Within ±3 positions: 67%
+  Podium call accuracy: 86%
+
+RACE-DAY CONTEXT & UNCERTAINTY FACTORS
+----------------------------------------------------------------------
+  Weather: Dry, 15-18°C, cloudy with sunny spells. No rain expected.
+  → Low uncertainty: dry conditions favor the model's predictions.
+
+  Antonelli: Floor damage from Sprint Qualifying gravel excursion. Team patched but ~25pts downforce loss. Handling compromised in low-speed corners.
+  → This may cause Antonelli to lose more positions than the model
+    expects, especially through Zandvoort's technical corners.
+
+  Driver swap: Liam Lawson promoted to Red Bull Racing (replacing injured Hadjar). Yuki Tsunoda moved to Racing Bulls for this event.
+  → Lawson has limited data in the Red Bull car. Tsunoda has minimal
+    2026 Racing Bulls data. Both drivers have higher uncertainty.
+
+  Venue: Last Dutch GP under current contract. Farewell race for the venue.
+
+HONEST LIMITATIONS
+----------------------------------------------------------------------
+  • DNFs from crashes/mechanical failures are inherently unpredictable.
+    The model predicts 'normal' race outcomes only.
+  • Safety car timing can shuffle the field unpredictably.
+  • Strategy calls (tire choices, pit windows) are not modeled.
+  • Antonelli's floor damage may impact performance beyond what
+    historical data captures.
+  • Lawson/Tsunoda have atypical weekend preparation due to the swap.
+  • First-lap incidents at Zandvoort's tight Turn 1 are effectively random.
+
+BOTTOM LINE: This is a genuine pre-race forecast, not a lookback.
+The model's LOO-CV suggests predictions are typically within
+±2.8 positions of actual. Treat the predicted podium as
+the most likely outcome (86% historical accuracy),
+but expect at least 2-3 positions of shuffle from the chaos factors above.

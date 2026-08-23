@@ -1,0 +1,7 @@
+fastf1>=3.4
+matplotlib>=3.8
+seaborn
+pandas>=2.1
+numpy>=1.26
+scikit-learn
+scipy
