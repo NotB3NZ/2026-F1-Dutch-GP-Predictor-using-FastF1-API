@@ -49,6 +49,9 @@ Because the model drops DNF results during training (to learn pure pace), it use
 ![Track Dominance Map](outputs/act2_track_dominance_NOR_vs_RUS_Q.png)
 *Track dominance map highlighting which driver was faster in micro-segments of the track.*
 
+![Speed Comparison](outputs/act2_speed_comparison_NOR_vs_RUS_Q.png)
+*Telemetry speed comparison trace between Norris and Russell during their fastest Q3 laps.*
+
 ---
 
 ## 🤖 Act 3 — Race Predictor Model
