@@ -1,8 +1,8 @@
 """
-ACT 3: 2026 DUTCH GRAND PRIX RACE PREDICTOR
+ACT 3: 2026 SPANISH GRAND PRIX (BARCELONA) RACE PREDICTOR
 
 Trains a Random Forest + Linear Regression ensemble on the 2026 season 
-(Rounds 1-11) to predict the finishing order for the Dutch GP (Round 12).
+(Rounds 1-13) to predict the finishing order for the Spanish GP (Round 14).
 
 Usage:
     .venv/bin/python -m src.act3_predictor
@@ -76,7 +76,7 @@ def load_act1_data():
 
 
 def build_training_features(per_race: pd.DataFrame) -> pd.DataFrame:
-    # Engineer features for each driver-race in the training data (rounds 1–11).
+    # Engineer features for each driver-race in the training data (rounds 1–12).
     df = per_race.copy()
 
     df["GridPosition"] = pd.to_numeric(df["GridPosition"], errors="coerce")
@@ -167,7 +167,7 @@ def build_prediction_features(
     per_race: pd.DataFrame,
 ) -> pd.DataFrame:
     # Build feature vector for each driver in Sunday's race.
-    # Uses the FULL 11-race season data.
+    # Uses the FULL 12-race season data.
     grid = get_starting_grid()
     pred_features = []
 
@@ -197,7 +197,7 @@ def build_prediction_features(
             dnf_count = 0
             total_races = 1
 
-        # Team rolling points (full season total heading into R12)
+        # Team rolling points (full season total heading into R13)
         team_data = per_race[per_race["TeamName"].str.contains(team, case=False, na=False)]
         if team_data.empty:
             # Try partial match
@@ -310,7 +310,7 @@ def train_model(features_df: pd.DataFrame):
 
 
 def generate_race_prediction(model_data: dict, pred_features: pd.DataFrame):
-    # Generate the final race prediction for Sunday's Dutch GP.
+    # Generate the final race prediction for Sunday's Spanish GP at Barcelona.
 
     X_pred = pred_features[FEATURE_COLS].values
 
@@ -420,7 +420,7 @@ def plot_predicted_finishing_order(prediction: pd.DataFrame) -> None:
 
     plt.tight_layout()
 
-    path = OUTPUT_DIR / "act3_dutch_gp_prediction.png"
+    path = OUTPUT_DIR / "act3_spanish_gp_prediction.png"
     fig.savefig(path, dpi=FIGURE_DPI, bbox_inches="tight", facecolor=fig.get_facecolor())
     logger.info(f"Saved: {path}")
     plt.close(fig)
@@ -531,10 +531,10 @@ def generate_report(prediction: pd.DataFrame, model_data: dict) -> str:
 
     lines = []
     lines.append("=" * 70)
-    lines.append("  🏁 2026 DUTCH GRAND PRIX — RACE PREDICTION REPORT")
+    lines.append("  🏁 2026 SPANISH GRAND PRIX (BARCELONA) — RACE PREDICTION REPORT")
     lines.append(f"  Generated: {datetime.now().strftime('%Y-%m-%d %H:%M')}")
     lines.append(f"  Model: Random Forest + Linear Regression Ensemble")
-    lines.append(f"  Training: {SEASON} Season, Rounds 1–{COMPLETED_ROUNDS} (11 races)")
+    lines.append(f"  Training: {SEASON} Season, Rounds 1–{COMPLETED_ROUNDS} ({COMPLETED_ROUNDS} races)")
     lines.append("=" * 70)
     lines.append("")
 
@@ -582,17 +582,12 @@ def generate_report(prediction: pd.DataFrame, model_data: dict) -> str:
     lines.append("RACE-DAY CONTEXT & UNCERTAINTY FACTORS")
     lines.append("-" * 70)
     lines.append(f"  Weather: {RACE_DAY_NOTES['weather']}")
-    lines.append(f"  → Low uncertainty: dry conditions favor the model's predictions.")
     lines.append("")
-    lines.append(f"  Antonelli: {RACE_DAY_NOTES['antonelli_damage']}")
-    lines.append(f"  → This may cause Antonelli to lose more positions than the model")
-    lines.append(f"    expects, especially through Zandvoort's technical corners.")
+    lines.append(f"  Track character: {RACE_DAY_NOTES['track_character']}")
     lines.append("")
-    lines.append(f"  Driver swap: {RACE_DAY_NOTES['lawson_swap']}")
-    lines.append(f"  → Lawson has limited data in the Red Bull car. Tsunoda has minimal")
-    lines.append(f"    2026 Racing Bulls data. Both drivers have higher uncertainty.")
+    lines.append(f"  Norris pole: {RACE_DAY_NOTES['norris_pole']}")
     lines.append("")
-    lines.append(f"  Venue: {RACE_DAY_NOTES['final_zandvoort']}")
+    lines.append(f"  Bearman/Stroll: {RACE_DAY_NOTES['bearman_stroll_dns']}")
     lines.append("")
 
     # Honest limitations
@@ -602,10 +597,11 @@ def generate_report(prediction: pd.DataFrame, model_data: dict) -> str:
     lines.append("    The model predicts 'normal' race outcomes only.")
     lines.append("  • Safety car timing can shuffle the field unpredictably.")
     lines.append("  • Strategy calls (tire choices, pit windows) are not modeled.")
-    lines.append("  • Antonelli's floor damage may impact performance beyond what")
-    lines.append("    historical data captures.")
-    lines.append("  • Lawson/Tsunoda have atypical weekend preparation due to the swap.")
-    lines.append("  • First-lap incidents at Zandvoort's tight Turn 1 are effectively random.")
+    lines.append("  • Barcelona's mix of high-speed and technical corners rewards")
+    lines.append("    all-round car performance — harder to predict upsets.")
+    lines.append("  • Bearman and Stroll start from the back (P21-22) and have")
+    lines.append("    limited overtaking opportunities compared to Monza.")
+    lines.append("  • First-lap incidents into Turn 1 are effectively random.")
     lines.append("")
     lines.append("BOTTOM LINE: This is a genuine pre-race forecast, not a lookback.")
     lines.append(f"The model's LOO-CV suggests predictions are typically within")
@@ -625,7 +621,7 @@ def main():
     # Run the full Act 3 pipeline: train, predict, visualize, report.
 
     print(f"\n{'='*60}")
-    print(f"  ACT 3 — 2026 Dutch Grand Prix Race Predictor")
+    print(f"  ACT 3 — 2026 Spanish Grand Prix (Barcelona) Race Predictor")
     print(f"{'='*60}\n")
 
     # Step 1: Load Act 1 data
@@ -675,15 +671,15 @@ def main():
     print("\n".join(report_lines[start_idx:end_idx]))
 
     print(f"\n{'='*60}")
-    print("  Act 3 complete! Outputs saved to outputs/")
+    print(f"  Act 3 complete! Outputs saved to outputs/2026_spanish_gp/")
     print(f"{'='*60}")
     print(f"\n  Charts:")
-    print(f"    • outputs/act3_dutch_gp_prediction.png")
-    print(f"    • outputs/act3_feature_importance.png")
-    print(f"    • outputs/act3_training_performance.png")
+    print(f"    • outputs/2026_spanish_gp/act3_spanish_gp_prediction.png")
+    print(f"    • outputs/2026_spanish_gp/act3_feature_importance.png")
+    print(f"    • outputs/2026_spanish_gp/act3_training_performance.png")
     print(f"  Data:")
-    print(f"    • outputs/act3_predictions.csv")
-    print(f"    • outputs/act3_prediction_report.txt")
+    print(f"    • outputs/2026_spanish_gp/act3_predictions.csv")
+    print(f"    • outputs/2026_spanish_gp/act3_prediction_report.txt")
     print()
 
     return prediction, model_data

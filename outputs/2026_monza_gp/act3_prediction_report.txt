@@ -1,0 +1,82 @@
+======================================================================
+  🏁 2026 ITALIAN GRAND PRIX (MONZA) — RACE PREDICTION REPORT
+  Generated: 2026-09-13 23:30
+  Model: Random Forest + Linear Regression Ensemble
+  Training: 2026 Season, Rounds 1–12 (12 races)
+======================================================================
+
+PREDICTED PODIUM
+----------------------------------------------------------------------
+  🥇 P1: George Russell (Mercedes) — Grid P2 (+1)
+  🥈 P2: Charles Leclerc (Ferrari) — Grid P3 (+1)
+  🥉 P3: Max Verstappen (Red Bull Racing) — Grid P5 (+2)
+
+FULL PREDICTED FINISHING ORDER
+----------------------------------------------------------------------
+  P 1: George Russell         (Mercedes          ) Grid P 2 (+1)
+  P 2: Charles Leclerc        (Ferrari           ) Grid P 3 (+1)
+  P 3: Max Verstappen         (Red Bull Racing   ) Grid P 5 (+2) ⚠ DNF risk
+  P 4: Lewis Hamilton         (Ferrari           ) Grid P 4 (+0)
+  P 5: Pierre Gasly           (Alpine            ) Grid P 1 (-4)
+  P 6: Oscar Piastri          (McLaren           ) Grid P 6 (+0)
+  P 7: Lando Norris           (McLaren           ) Grid P 8 (+1)
+  P 8: Franco Colapinto       (Alpine            ) Grid P 7 (-1)
+  P 9: Arvid Lindblad         (Racing Bulls      ) Grid P 9 (+0)
+  P10: Nico Hulkenberg        (Audi              ) Grid P12 (+2)
+  P11: Kimi Antonelli         (Mercedes          ) Grid P20 (+9)
+  P12: Gabriel Bortoleto      (Audi              ) Grid P10 (-2)
+  P13: Oliver Bearman         (Haas F1 Team      ) Grid P11 (-2) ⚠ DNF risk
+  P14: Yuki Tsunoda           (Racing Bulls      ) Grid P15 (+1)
+  P15: Liam Lawson            (Red Bull Racing   ) Grid P22 (+7) ⚠ DNF risk
+  P16: Carlos Sainz           (Williams          ) Grid P13 (-3) ⚠ DNF risk
+  P17: Esteban Ocon           (Haas F1 Team      ) Grid P14 (-3) ⚠ DNF risk
+  P18: Valtteri Bottas        (Cadillac          ) Grid P16 (-2) ⚠ DNF risk
+  P19: Sergio Pérez           (Cadillac          ) Grid P17 (-2) ⚠ DNF risk
+  P20: Fernando Alonso        (Aston Martin      ) Grid P18 (-2) ⚠ DNF risk
+  P21: Lance Stroll           (Aston Martin      ) Grid P19 (-2) ⚠ DNF risk
+  P22: Alex Albon             (Williams          ) Grid P21 (-1) ⚠ DNF risk
+
+MODEL CONFIDENCE (Leave-One-Round-Out Cross-Validation)
+----------------------------------------------------------------------
+  MAE:  2.70 positions (average prediction error)
+  RMSE: 3.66 positions
+  R²:   0.552
+  Within ±1 position: 23%
+  Within ±3 positions: 68%
+  Podium call accuracy: 85%
+
+RACE-DAY CONTEXT & UNCERTAINTY FACTORS
+----------------------------------------------------------------------
+  Weather: Hot and sunny, 33-34°C air temperature. Dry conditions, 0-5% chance of rain. FIA declared 'Heat Hazard' for the event.
+  → Hot conditions may stress tyres and power units. Heat hazard declared.
+
+  Gasly pole: Pierre Gasly's maiden F1 pole position — 0.060s clear of Russell. Alpine's strongest qualifying performance of the 2026 season.
+  → Alpine's pace is an outlier — model has limited data on Alpine
+    leading from the front. Higher uncertainty on Gasly's race pace.
+
+  Engine penalties: Antonelli (Mercedes), Albon (Williams), and Lawson (Red Bull Racing) all start from the back of the grid due to power unit penalties. Monza's long straights and DRS zones offer excellent overtaking opportunities.
+  → ANT (P20), ALB (P21), LAW (P22) all start from the back.
+    Monza's overtaking opportunities mean they can recover significantly.
+
+  Piastri penalty: Oscar Piastri received a 3-place grid penalty for impeding Liam Lawson during Q2. Dropped from P3 to P6 on the grid.
+
+  Track character: Monza is the 'Temple of Speed' — long straights, heavy braking zones, and multiple DRS zones make it one of the best circuits for overtaking. Back-of-grid starters can realistically carve through the field.
+
+HONEST LIMITATIONS
+----------------------------------------------------------------------
+  • DNFs from crashes/mechanical failures are inherently unpredictable.
+    The model predicts 'normal' race outcomes only.
+  • Safety car timing can shuffle the field unpredictably.
+  • Strategy calls (tire choices, pit windows) are not modeled.
+  • Gasly on pole is an outlier event — Alpine have not led a race
+    in 2026. The model may over- or under-estimate their race pace.
+  • Engine penalty drivers (ANT, ALB, LAW) start P20-22 but have
+    strong cars — Monza's DRS zones enable rapid overtaking.
+  • Extreme heat (33°C+) may cause unexpected mechanical retirements.
+  • First-lap incidents into Monza's T1 chicane are effectively random.
+
+BOTTOM LINE: This is a genuine pre-race forecast, not a lookback.
+The model's LOO-CV suggests predictions are typically within
+±2.7 positions of actual. Treat the predicted podium as
+the most likely outcome (85% historical accuracy),
+but expect at least 2-3 positions of shuffle from the chaos factors above.

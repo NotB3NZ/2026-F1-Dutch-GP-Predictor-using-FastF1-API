@@ -1,28 +1,40 @@
-# 🏎️ FastF1 2026 Dutch Grand Prix Predictor
+# 🏎️ FastF1 2026 Race Predictor (Dutch, Italian, & Spanish GPs)
 
-A live, machine-learning-powered prediction pipeline for the **2026 Dutch Grand Prix at Zandvoort** (Round 12, August 23, 2026). 
+A live, machine-learning-powered prediction pipeline for the **2026 Formula 1 Season**. Initially built for the Dutch Grand Prix (Round 12) and subsequently expanded to predict the Italian (Round 13) and Spanish (Round 14) Grands Prix.
 
 Built using `fastf1`, `pandas`, and `scikit-learn`, this model leverages a Random Forest + Linear Regression ensemble to predict race day finishing orders based purely on current-season pace, telemetry, and reliability metrics.
 
-**Spoiler Alert:** It was incredibly accurate.
+**Spoiler Alert:** It was surprisingly accurate.
 
 ---
 
 ## Prediction vs. Reality (The Results)
 
-The model was generated *before* the race using only data from Rounds 1-11 of the 2026 season and the confirmed starting grid. We explicitly removed historical pre-2026 data to avoid bias from old car regulations.
+The model is generated *before* each race using only data from the completed rounds of the 2026 season and the confirmed starting grid from the qualifying session. I intentionally removed historical pre-2026 data to avoid bias from old car regulations. This was a deliberate choice to force the model to learn only from the current season and the new regulations in place for 2026.
 
-### The Podium & Top 5
-* **Predicted:** 1. Norris 2. Russell 3. Antonelli 4. Piastri 5. Hamilton
-* **Actual:** 1. Norris 2. Antonelli 3. Russell 4. Hamilton 5. Leclerc (Piastri 6th)
+### 🇳🇱 Dutch GP (Round 12)
+* **Predicted Top 5:** 1. Norris, 2. Russell, 3. Antonelli, 4. Piastri, 5. Hamilton
+* **Actual Top 5:** 1. Norris, 2. Antonelli, 3. Russell, 4. Hamilton, 5. Leclerc
+* **Result:** **2/3 on the podium** and we successfully predicted the race winner (Norris)! We were only one position off from perfectly nailing the Top 5. Also successfully predicted DNFs for Verstappen, Albon, and Bottas using our statistical reliability overlay.
 
-**Result:** We successfully predicted the race winner (Norris), correctly identified the exact three drivers on the podium, and were only one position off from perfectly nailing the Top 5.
+![Dutch GP Prediction vs Reality](outputs/dutch_gp_comparison.png)
 
-### The DNFs
-Because the model drops DNF results during training (to learn pure pace), it uses a statistical overlay to flag drivers at risk of a DNF based on their 2026 season reliability.
-* **The Threshold:** Any team with a >15% DNF rate over the first 11 races (meaning 4+ DNFs across their two cars) received a `⚠ DNF risk` flag.
-* **The Flags:** The model explicitly flagged **Max Verstappen**, **Alex Albon**, and **Valtteri Bottas**.
-* **The Reality:** **All three of them DNF'd in the race.**
+
+### 🇮🇹 Italian GP (Round 13)
+* **Predicted Top 3:** 1. Russell, 2. Leclerc, 3. Verstappen
+* **Actual Top 3:** 1. Antonelli, 2. Russell, 3. Verstappen
+* **Result:** **2/3 on the podium** (Russell and Verstappen)! The model correctly identified Russell and Verstappen as podium contenders. Arguably would've also predicted the race winner had the Mercedes played with the Papaya rules (I feel for Russel❤️‍🩹)
+
+![Italian GP Prediction vs Reality](outputs/italian_gp_comparison.png)
+
+
+### 🇪🇸 Spanish GP (Round 14)
+* **Predicted Top 5:** 1. Norris, 2. Antonelli, 3. Verstappen, 4. Leclerc, 5. Russell
+* **Actual Top 5:** 1. Antonelli, 2. Verstappen, 3. Norris, 4. Leclerc, 5. Russell
+* **Result:** **5/5 for the Top 5!** Although the model did not correctly identify the race winner, it correctly identified all 5 drivers who finished in the Top 5. 
+
+![Spanish GP Prediction vs Reality](outputs/spanish_gp_comparison.png)
+
 
 ---
 
@@ -77,9 +89,6 @@ Because the model drops DNF results during training (to learn pure pace), it use
 * **MAE:** 2.82 positions
 * **R²:** 0.528
 * **Podium accuracy:** 86%
-
-![Predicted Finishing Order](outputs/act3_dutch_gp_prediction.png)
-*Final predicted finishing order output by the ensemble model.*
 
 ![Feature Importance](outputs/act3_feature_importance.png)
 *Random Forest feature importance ranking.*

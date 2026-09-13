@@ -6,7 +6,7 @@ Same approach as the validated 2023 project:
 - DNFs EXCLUDED from pace gap averages but tracked as reliability metric
 - Only main Sunday races (no sprints), so grid = qualifying position
 
-Scoped to the 11 completed 2026 races (Australia → Hungary).
+Scoped to the 12 completed 2026 races (Australia → Dutch GP).
 Output feeds into Act 3 as a feature/context input.
 
 OUTPUTS:
