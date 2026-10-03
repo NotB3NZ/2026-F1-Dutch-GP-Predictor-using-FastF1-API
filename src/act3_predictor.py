@@ -1,8 +1,8 @@
 """
-ACT 3: 2026 SPANISH GRAND PRIX (BARCELONA) RACE PREDICTOR
+ACT 3: 2026 BAHRAIN GRAND PRIX (SEPANG) RACE PREDICTOR
 
 Trains a Random Forest + Linear Regression ensemble on the 2026 season 
-(Rounds 1-13) to predict the finishing order for the Spanish GP (Round 14).
+(Rounds 1-15) to predict the finishing order for the Bahrain GP (Round 16).
 
 Usage:
     .venv/bin/python -m src.act3_predictor
@@ -76,7 +76,7 @@ def load_act1_data():
 
 
 def build_training_features(per_race: pd.DataFrame) -> pd.DataFrame:
-    # Engineer features for each driver-race in the training data (rounds 1–12).
+    # Engineer features for each driver-race in the training data (rounds 1–14).
     df = per_race.copy()
 
     df["GridPosition"] = pd.to_numeric(df["GridPosition"], errors="coerce")
@@ -166,8 +166,8 @@ def build_prediction_features(
     stats: pd.DataFrame,
     per_race: pd.DataFrame,
 ) -> pd.DataFrame:
-    # Build feature vector for each driver in Sunday's race.
-    # Uses the FULL 12-race season data.
+    # Build feature vector for each driver in the race.
+    # Uses the FULL 14-race season data.
     grid = get_starting_grid()
     pred_features = []
 
@@ -188,7 +188,7 @@ def build_prediction_features(
             dnf_count = row.get("DNFCount", 0)
             total_races = row.get("TotalRaces", 1)
         else:
-            # Driver not in Act 1 stats (e.g., Tsunoda/Lawson swap)
+            # Driver not in Act 1 stats (e.g., Hadjar missed 3 races)
             # Use reasonable defaults
             hist_gain = 0.0
             completion_rate = 100.0
@@ -197,7 +197,7 @@ def build_prediction_features(
             dnf_count = 0
             total_races = 1
 
-        # Team rolling points (full season total heading into R13)
+        # Team rolling points (full season total heading into R15)
         team_data = per_race[per_race["TeamName"].str.contains(team, case=False, na=False)]
         if team_data.empty:
             # Try partial match
@@ -310,7 +310,7 @@ def train_model(features_df: pd.DataFrame):
 
 
 def generate_race_prediction(model_data: dict, pred_features: pd.DataFrame):
-    # Generate the final race prediction for Sunday's Spanish GP at Barcelona.
+    # Generate the final race prediction for the Bahrain GP at Sepang.
 
     X_pred = pred_features[FEATURE_COLS].values
 
@@ -420,7 +420,7 @@ def plot_predicted_finishing_order(prediction: pd.DataFrame) -> None:
 
     plt.tight_layout()
 
-    path = OUTPUT_DIR / "act3_spanish_gp_prediction.png"
+    path = OUTPUT_DIR / "act3_bahrain_gp_prediction.png"
     fig.savefig(path, dpi=FIGURE_DPI, bbox_inches="tight", facecolor=fig.get_facecolor())
     logger.info(f"Saved: {path}")
     plt.close(fig)
@@ -531,7 +531,7 @@ def generate_report(prediction: pd.DataFrame, model_data: dict) -> str:
 
     lines = []
     lines.append("=" * 70)
-    lines.append("  🏁 2026 SPANISH GRAND PRIX (BARCELONA) — RACE PREDICTION REPORT")
+    lines.append("  🏁 2026 BAHRAIN GRAND PRIX (SEPANG) — RACE PREDICTION REPORT")
     lines.append(f"  Generated: {datetime.now().strftime('%Y-%m-%d %H:%M')}")
     lines.append(f"  Model: Random Forest + Linear Regression Ensemble")
     lines.append(f"  Training: {SEASON} Season, Rounds 1–{COMPLETED_ROUNDS} ({COMPLETED_ROUNDS} races)")
@@ -585,9 +585,11 @@ def generate_report(prediction: pd.DataFrame, model_data: dict) -> str:
     lines.append("")
     lines.append(f"  Track character: {RACE_DAY_NOTES['track_character']}")
     lines.append("")
-    lines.append(f"  Norris pole: {RACE_DAY_NOTES['norris_pole']}")
+    lines.append(f"  Verstappen pole: {RACE_DAY_NOTES['verstappen_pole']}")
     lines.append("")
-    lines.append(f"  Bearman/Stroll: {RACE_DAY_NOTES['bearman_stroll_dns']}")
+    lines.append(f"  Location change: {RACE_DAY_NOTES['location_change']}")
+    lines.append("")
+    lines.append(f"  Grid penalties: {RACE_DAY_NOTES['grid_penalties']}")
     lines.append("")
 
     # Honest limitations
@@ -595,13 +597,14 @@ def generate_report(prediction: pd.DataFrame, model_data: dict) -> str:
     lines.append("-" * 70)
     lines.append("  • DNFs from crashes/mechanical failures are inherently unpredictable.")
     lines.append("    The model predicts 'normal' race outcomes only.")
-    lines.append("  • Safety car timing can shuffle the field unpredictably.")
+    lines.append("  • Sepang's extreme heat and humidity can cause unexpected power")
+    lines.append("    unit failures and high tire degradation, which aren't fully captured.")
     lines.append("  • Strategy calls (tire choices, pit windows) are not modeled.")
-    lines.append("  • Barcelona's mix of high-speed and technical corners rewards")
-    lines.append("    all-round car performance — harder to predict upsets.")
-    lines.append("  • Bearman and Stroll start from the back (P21-22) and have")
-    lines.append("    limited overtaking opportunities compared to Monza.")
-    lines.append("  • First-lap incidents into Turn 1 are effectively random.")
+    lines.append("  • The two long back-to-back straights offer great overtaking,")
+    lines.append("    meaning grid position might matter slightly less than usual.")
+    lines.append("  • Grid penalties have pushed several fast cars down the order")
+    lines.append("    (Hadjar, Colapinto, Lindblad), increasing the likelihood of recovery drives.")
+    lines.append("  • The first corner (Turn 1 hairpin) is a common spot for incidents.")
     lines.append("")
     lines.append("BOTTOM LINE: This is a genuine pre-race forecast, not a lookback.")
     lines.append(f"The model's LOO-CV suggests predictions are typically within")
@@ -621,7 +624,7 @@ def main():
     # Run the full Act 3 pipeline: train, predict, visualize, report.
 
     print(f"\n{'='*60}")
-    print(f"  ACT 3 — 2026 Spanish Grand Prix (Barcelona) Race Predictor")
+    print(f"  ACT 3 — 2026 Bahrain Grand Prix (Sepang) Race Predictor")
     print(f"{'='*60}\n")
 
     # Step 1: Load Act 1 data
@@ -671,15 +674,15 @@ def main():
     print("\n".join(report_lines[start_idx:end_idx]))
 
     print(f"\n{'='*60}")
-    print(f"  Act 3 complete! Outputs saved to outputs/2026_spanish_gp/")
+    print(f"  Act 3 complete! Outputs saved to outputs/2026_bahrain_gp/")
     print(f"{'='*60}")
     print(f"\n  Charts:")
-    print(f"    • outputs/2026_spanish_gp/act3_spanish_gp_prediction.png")
-    print(f"    • outputs/2026_spanish_gp/act3_feature_importance.png")
-    print(f"    • outputs/2026_spanish_gp/act3_training_performance.png")
+    print(f"    • outputs/2026_bahrain_gp/act3_bahrain_gp_prediction.png")
+    print(f"    • outputs/2026_bahrain_gp/act3_feature_importance.png")
+    print(f"    • outputs/2026_bahrain_gp/act3_training_performance.png")
     print(f"  Data:")
-    print(f"    • outputs/2026_spanish_gp/act3_predictions.csv")
-    print(f"    • outputs/2026_spanish_gp/act3_prediction_report.txt")
+    print(f"    • outputs/2026_bahrain_gp/act3_predictions.csv")
+    print(f"    • outputs/2026_bahrain_gp/act3_prediction_report.txt")
     print()
 
     return prediction, model_data

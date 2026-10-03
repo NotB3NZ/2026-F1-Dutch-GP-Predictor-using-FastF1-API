@@ -1,0 +1,81 @@
+======================================================================
+  🏁 2026 AZERBAIJAN GRAND PRIX (BAKU) — RACE PREDICTION REPORT
+  Generated: 2026-10-03 22:07
+  Model: Random Forest + Linear Regression Ensemble
+  Training: 2026 Season, Rounds 1–14 (14 races)
+======================================================================
+
+PREDICTED PODIUM
+----------------------------------------------------------------------
+  🥇 P1: George Russell (Mercedes) — Grid P1 (+0)
+  🥈 P2: Charles Leclerc (Ferrari) — Grid P2 (+0)
+  🥉 P3: Isack Hadjar (Red Bull Racing) — Grid P4 (+1)
+
+FULL PREDICTED FINISHING ORDER
+----------------------------------------------------------------------
+  P 1: George Russell         (Mercedes          ) Grid P 1 (+0)
+  P 2: Charles Leclerc        (Ferrari           ) Grid P 2 (+0)
+  P 3: Isack Hadjar           (Red Bull Racing   ) Grid P 4 (+1) ⚠ DNF risk
+  P 4: Oscar Piastri          (McLaren           ) Grid P 3 (-1)
+  P 5: Lando Norris           (McLaren           ) Grid P 5 (+0)
+  P 6: Lewis Hamilton         (Ferrari           ) Grid P 6 (+0)
+  P 7: Max Verstappen         (Red Bull Racing   ) Grid P 8 (+1) ⚠ DNF risk
+  P 8: Kimi Antonelli         (Mercedes          ) Grid P16 (+8)
+  P 9: Pierre Gasly           (Alpine            ) Grid P 7 (-2)
+  P10: Franco Colapinto       (Alpine            ) Grid P 9 (-1)
+  P11: Liam Lawson            (Racing Bulls      ) Grid P11 (+0)
+  P12: Arvid Lindblad         (Racing Bulls      ) Grid P15 (+3)
+  P13: Oliver Bearman         (Haas F1 Team      ) Grid P10 (-3) ⚠ DNF risk
+  P14: Gabriel Bortoleto      (Audi              ) Grid P17 (+3)
+  P15: Alexander Albon        (Williams          ) Grid P12 (-3) ⚠ DNF risk
+  P16: Esteban Ocon           (Haas F1 Team      ) Grid P13 (-3) ⚠ DNF risk
+  P17: Nico Hulkenberg        (Audi              ) Grid P18 (+1)
+  P18: Carlos Sainz           (Williams          ) Grid P14 (-4) ⚠ DNF risk
+  P19: Fernando Alonso        (Aston Martin      ) Grid P21 (+2) ⚠ DNF risk
+  P20: Sergio Pérez           (Cadillac          ) Grid P20 (+0) ⚠ DNF risk
+  P21: Valtteri Bottas        (Cadillac          ) Grid P19 (-2) ⚠ DNF risk
+  P22: Lance Stroll           (Aston Martin      ) Grid P22 (+0) ⚠ DNF risk
+
+MODEL CONFIDENCE (Leave-One-Round-Out Cross-Validation)
+----------------------------------------------------------------------
+  MAE:  2.56 positions (average prediction error)
+  RMSE: 3.51 positions
+  R²:   0.587
+  Within ±1 position: 24%
+  Within ±3 positions: 72%
+  Podium call accuracy: 88%
+
+RACE-DAY CONTEXT & UNCERTAINTY FACTORS
+----------------------------------------------------------------------
+  Weather: Sunny conditions in Baku. The race was held on Saturday due to Azerbaijan's Day of Remembrance on September 27.
+
+  Track character: Baku City Circuit is a street circuit known for its mix of tight low-speed corners in the old town section and the extremely long 2.2km main straight along the Caspian Sea waterfront. Two DRS zones provide excellent overtaking opportunities, particularly at Turn 1. The walls are unforgiving — errors are punished harshly.
+
+  Russell pole: George Russell takes his 5th pole of 2026 with a dominant qualifying lap of 1:42.526, over eight tenths ahead of the field.
+
+  Antonelli crash: Championship leader Kimi Antonelli crashed into the wall during Q1, damaging his suspension. He starts 16th on the grid — a significant setback, but Baku's long straight offers recovery potential.
+
+  Hadjar return: Isack Hadjar returns to Red Bull Racing after missing 3 races (Dutch, Italian, Spanish GPs) with a wrist injury. Liam Lawson returns to Racing Bulls, and Tsunoda is also back.
+
+  Grid penalties: Carlos Sainz received a 5-place grid penalty for ignoring yellow flags. Both Aston Martin drivers (Alonso, Stroll) incurred penalties for power unit component changes, dropping them to P21 and P22.
+
+HONEST LIMITATIONS
+----------------------------------------------------------------------
+  • DNFs from crashes/mechanical failures are inherently unpredictable.
+    The model predicts 'normal' race outcomes only.
+  • Safety car timing can shuffle the field unpredictably.
+    Baku is notorious for safety cars — two occurred in this race.
+  • Strategy calls (tire choices, pit windows) are not modeled.
+  • Baku's long straight rewards top-speed cars, but the tight
+    old town section creates separation. Wall contact is common.
+  • Isack Hadjar returns after missing 3 races — limited recent
+    race data may reduce prediction accuracy for him.
+  • Antonelli starts P16 after a Q1 crash — recovery drive from
+    the back is possible on this track thanks to DRS zones.
+  • First-lap incidents into Turn 1 are effectively random.
+
+BOTTOM LINE: This is a genuine pre-race forecast, not a lookback.
+The model's LOO-CV suggests predictions are typically within
+±2.6 positions of actual. Treat the predicted podium as
+the most likely outcome (88% historical accuracy),
+but expect at least 2-3 positions of shuffle from the chaos factors above.

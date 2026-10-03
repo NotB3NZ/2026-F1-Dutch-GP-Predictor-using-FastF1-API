@@ -4,10 +4,10 @@ ACT 1: QUALIFYING VS RACE PACE GAP ANALYSIS (2026 SEASON)
 Same approach as the validated 2023 project:
 - PositionsGained = GridPosition - Position (positive = overperformed)
 - DNFs EXCLUDED from pace gap averages but tracked as reliability metric
-- Only main Sunday races (no sprints), so grid = qualifying position
+- Only main race day results (no sprints), so grid = qualifying position
 
-Scoped to the 12 completed 2026 races (Australia → Dutch GP).
-Output feeds into Act 3 as a feature/context input.
+Scoped to the 15 completed 2026 races (Australia → Azerbaijan GP).
+Output feeds into Act 3 as a feature/context input for the Bahrain GP.
 
 OUTPUTS:
 - act1_avg_positions_gained.png  — Ranked bar chart of season averages

@@ -1,6 +1,6 @@
-# 🏎️ FastF1 2026 Race Predictor (Dutch, Italian, & Spanish GPs)
+# 🏎️ FastF1 2026 Race Predictor
 
-A live, machine-learning-powered prediction pipeline for the **2026 Formula 1 Season**. Initially built for the Dutch Grand Prix (Round 12) and subsequently expanded to predict the Italian (Round 13) and Spanish (Round 14) Grands Prix.
+A live, machine-learning-powered prediction pipeline for the **2026 Formula 1 Season**. Initially built for the Dutch Grand Prix (Round 12) and subsequently expanded to predict the Italian (Round 13), Spanish (Round 14), Azerbaijan (Round 15), and Bahrain (Round 16) Grands Prix.
 
 Built using `fastf1`, `pandas`, and `scikit-learn`, this model leverages a Random Forest + Linear Regression ensemble to predict race day finishing orders based purely on current-season pace, telemetry, and reliability metrics.
 
@@ -36,41 +36,57 @@ The model is generated *before* each race using only data from the completed rou
 ![Spanish GP Prediction vs Reality](outputs/spanish_gp_comparison.png)
 
 
+### 🇦🇿 Azerbaijan GP (Round 15)
+* **Predicted Top 3:** 1. Russell, 2. Leclerc, 3. Hadjar
+* **Actual Top 3:** TBD
+* **Result:** TBD
+
+![Azerbaijan GP Prediction vs Reality](outputs/2026_azerbaijan_gp/act3_azerbaijan_gp_prediction.png)
+
+
+### 🇧🇭 Bahrain GP (Round 16, Sepang)
+* **Predicted Top 5:** 1. Antonelli, 2. Verstappen, 3. Leclerc, 4. Russell, 5. Norris
+* **Actual Top 5:** TBD
+* **Result:** TBD
+
+![Bahrain GP Prediction vs Reality](outputs/2026_bahrain_gp/act3_bahrain_gp_prediction.png)
+
+
 ---
 
 ## 📊 Act 1 — 2026 Pace Gap & Season Trends
 
-**Goal:** Calculate `PositionsGained = GridPosition - FinishPosition` across the 11 completed 2026 races to identify over/underperformers and establish reliability baselines.
+**Goal:** Calculate `PositionsGained = GridPosition - FinishPosition` across the 15 completed 2026 races to identify over/underperformers and establish reliability baselines.
 
 **Key findings:**
 - **Verstappen (+2.75 avg)** consistently gains places on race day.
 - **Antonelli (-0.80 avg)** and **Russell (-0.78 avg)** underperform their grid slots slightly, largely because they qualify at the very front with less room to gain.
 - **18.2% DNF rate** across the season establishes a high baseline for mechanical failures and crashes in 2026.
 
-![Positions Gained Heatmap](outputs/act1_positions_gained_heatmap.png)
+![Positions Gained Heatmap](outputs/2026_bahrain_gp/act1_positions_gained_heatmap.png)
 *Heatmap of positions gained and lost by driver across the 2026 season.*
 
 ---
 
-## 🏁 Act 2 — Zandvoort Track Dominance
+## 🏁 Act 2 — Track Dominance
 
-**Goal:** Compare Lando Norris vs. George Russell (front-row starters) using fastest-lap telemetry purely from the 2026 Zandvoort Qualifying session.
+**Goal:** Compare the top two front-row starters using fastest-lap telemetry purely from the target Qualifying session (e.g. Verstappen vs Hamilton at Bahrain).
 
-**Key insight:** By analyzing 2026 telemetry, we identified exactly where Norris was pulling ahead of Russell on the current weekend to secure pole position.
+**Key insight:** By analyzing 2026 telemetry, we identified exactly where the pole-sitter was pulling ahead in micro-segments of the track.
 
-![Track Dominance Map](outputs/act2_track_dominance_NOR_vs_RUS_Q.png)
+![Track Dominance Map](outputs/2026_bahrain_gp/act2_track_dominance_VER_vs_HAM_Q.png)
 *Track dominance map highlighting which driver was faster in micro-segments of the track.*
 
-![Speed Comparison](outputs/act2_speed_comparison_NOR_vs_RUS_Q.png)
-*Telemetry speed comparison trace between Norris and Russell during their fastest Q3 laps.*
+![Speed Comparison](outputs/2026_bahrain_gp/act2_speed_comparison_VER_vs_HAM_Q.png)
+*Telemetry speed comparison trace during their fastest Q3 laps.*
 
 ---
 
 ## 🤖 Act 3 — Race Predictor Model
 
-**Goal:** Predict the finishing order for all 22 drivers in Sunday's Dutch GP.
+**Goal:** Predict the finishing order for all 22 drivers in the upcoming GP.
 
-**Model:** Random Forest + Linear Regression ensemble, trained on the 11 completed 2026 races.
+**Model:** Random Forest + Linear Regression ensemble, trained on the completed 2026 races (currently 15 races).
 
 **Features (all knowable before race start):**
 | Feature | Description |
@@ -83,14 +99,14 @@ The model is generated *before* each race using only data from the completed rou
 | `GridVariance` | Qualifying consistency |
 | `TeamDNFRate` | Team-level DNF rate |
 
-*(Note: `ZandvoortHistoricalPerf` was actively removed from the model to prevent massive historical bias from Verstappen's 2023-2025 winning streak under old regulations).*
+*(Note: Historical performances from previous years are actively removed from the model to prevent massive historical bias from old regulations).*
 
-**Training Quality (LOO-CV on 11 races):**
-* **MAE:** 2.82 positions
-* **R²:** 0.528
-* **Podium accuracy:** 86%
+**Training Quality (LOO-CV on 15 races):**
+* **MAE:** 2.56 positions
+* **R²:** 0.584
+* **Podium accuracy:** 89%
 
-![Feature Importance](outputs/act3_feature_importance.png)
+![Feature Importance](outputs/2026_bahrain_gp/act3_feature_importance.png)
 *Random Forest feature importance ranking.*
 
 ---
@@ -134,17 +150,17 @@ pip install -r requirements.txt
 Run each Act in order — Act 3 depends on Act 1's output. Make sure you use the virtual environment!
 
 ```bash
-# Act 1: 2026 Season Pace Gap (~10 min first run, instant after caching)
+# Act 1: 2026 Season Pace Gap
 .venv/bin/python -m src.act1_pace_gap
 
-# Act 2: Zandvoort Track Dominance (~2 min first run)
+# Act 2: Track Dominance
 .venv/bin/python -m src.act2_track_dominance
 
-# Act 3: Dutch GP Race Prediction (~2 min)
+# Act 3: Race Prediction
 .venv/bin/python -m src.act3_predictor
 ```
 
-All outputs and charts are saved to the `outputs/` directory.
+All outputs and charts are saved to the `outputs/<event_name>/` directory.
 
 ---
 

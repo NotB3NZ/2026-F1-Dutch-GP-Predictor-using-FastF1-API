@@ -1,12 +1,12 @@
 """
-ACT 2: BARCELONA TRACK DOMINANCE MAP
+ACT 2: BAHRAIN TRACK DOMINANCE MAP
 
 Adapted from the 2023 project's act2_dominance_map.py with these changes:
-- Evaluates the current 2026 weekend sessions (FP1, Q) purely on 2026 data
+- Evaluates the current 2026 weekend sessions (FP1, FP2, FP3, Q) purely on 2026 data
 - Produces a dominance map + speed trace per session
 - Generates a sector-level summary
 
-Default comparison: NOR vs ANT (pole-sitter vs P2 qualifier at Barcelona)
+Default comparison: VER vs HAM (pole-sitter vs P2 qualifier at Bahrain)
 
 OUTPUTS:
 - act2_track_dominance_{D1}_vs_{D2}_{SESSION}.png — Track map per session
@@ -29,7 +29,7 @@ from matplotlib.collections import LineCollection
 from src.config import (
     FIGURE_DPI,
     OUTPUT_DIR,
-    BARCELONA_SESSIONS,
+    BAHRAIN_SESSIONS,
     TEAM_COLORS_2026,
     SEASON,
 )
@@ -46,9 +46,9 @@ logger = logging.getLogger(__name__)
 # DRIVER CONFIGS
 # ----------------------------------------------------------
 
-DRIVER_1 = "NOR"  # Pole position holder
-DRIVER_2 = "ANT"  # P2 qualifier
-EVENT_NAME = "Spanish Grand Prix"
+DRIVER_1 = "VER"  # Pole position holder
+DRIVER_2 = "HAM"  # P2 qualifier
+EVENT_NAME = "Bahrain Grand Prix"
 
 
 
@@ -317,12 +317,12 @@ def main(
     driver2: str = DRIVER_2,
     event: str = EVENT_NAME,
 ):
-    #Run the full Act 2 pipeline across 2026 Barcelona sessions.
+    #Run the full Act 2 pipeline across 2026 Baku sessions.
 
     print(f"\n{'='*60}")
-    print(f"  ACT 2 — Barcelona Track Dominance Map")
+    print(f"  ACT 2 — Bahrain Track Dominance Map")
     print(f"  {driver1} vs {driver2} | {SEASON} {event}")
-    print(f"  Sessions: {BARCELONA_SESSIONS}")
+    print(f"  Sessions: {BAHRAIN_SESSIONS}")
     print(f"{'='*60}\n")
 
     init_cache()
@@ -330,7 +330,7 @@ def main(
     all_sector_data = []
     year = SEASON
 
-    for session_type in BARCELONA_SESSIONS:
+    for session_type in BAHRAIN_SESSIONS:
         print(f"\n--- {year} {event} {session_type} ---")
 
         # Load session
@@ -390,8 +390,8 @@ def main(
             })
 
         # Get colors
-        color1 = get_team_color(session, driver1, fallback="#FF8000")
-        color2 = get_team_color(session, driver2, fallback="#3671C6")
+        color1 = get_team_color(session, driver1, fallback="#27F4D2")
+        color2 = get_team_color(session, driver2, fallback="#E8002D")
         if color1 == color2:
             color2 = "#FFD700"
 
@@ -414,14 +414,14 @@ def main(
         logger.info(f"Saved: {sector_path}")
 
         print(f"\n{'='*60}")
-        print(f"  Sector Summary (across all years)")
+        print(f"  Sector Summary (across all sessions)")
         print(f"{'='*60}")
         print(sector_df.to_string(index=False))
     else:
         print("\n⚠ No sector data generated — check telemetry availability.")
 
     print(f"\n{'='*60}")
-    print(f"  Act 2 complete! Outputs saved to outputs/")
+    print(f"  Act 2 complete! Outputs saved to {OUTPUT_DIR}")
     print(f"{'='*60}\n")
 
 
