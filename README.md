@@ -49,7 +49,7 @@ The model is generated *before* each race using only data from the completed rou
 * **Actual Top 5:** TBD
 * **Result:** TBD
 
-![Bahrain GP Prediction vs Reality](outputs/2026_bahrain_gp/act3_bahrain_gp_prediction.png)
+![Bahrain GP Prediction vs Reality](other_media/bahrain_gp_result.png)
 
 
 ---
