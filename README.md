@@ -38,10 +38,13 @@ The model is generated *before* each race using only data from the completed rou
 
 ### 🇦🇿 Azerbaijan GP (Round 15)
 * **Predicted Top 3:** 1. Russell, 2. Leclerc, 3. Hadjar
-* **Actual Top 3:** TBD
-* **Result:** TBD
+* **Actual Top 3:** 1. Russell, 2. Verstappen, 3. Hadjar
+* **Result:** **2/3 of the podiums correct!** We successfully predicted George Russell to win and correctly placed Isack Hadjar in P3.
 
-![Azerbaijan GP Prediction vs Reality](outputs/2026_azerbaijan_gp/act3_azerbaijan_gp_prediction.png)
+<p align="center">
+  <img src="outputs/2026_azerbaijan_gp/act3_azerbaijan_gp_prediction.png" width="45%" title="Prediction" />
+  <img src="other_media/azerbaijan_gp_result.png" width="45%" title="Actual Result" />
+</p>
 
 
 ### 🇧🇭 Bahrain GP (Round 16, Sepang)
@@ -49,7 +52,7 @@ The model is generated *before* each race using only data from the completed rou
 * **Actual Top 5:** TBD
 * **Result:** TBD
 
-![Bahrain GP Prediction vs Reality](other_media/bahrain_gp_result.png)
+![Bahrain GP Prediction vs Reality](outputs/2026_bahrain_gp/act3_bahrain_gp_prediction.png)
 
 
 ---
