@@ -42,8 +42,8 @@ The model uses completed rounds of the 2026 season and the target qualifying ses
 * **Result:** **2/3 of the podiums correct!** We successfully predicted George Russell to win and correctly placed Isack Hadjar in P3.
 
 <p align="center">
-  <img src="outputs/2026_azerbaijan_gp/act3_azerbaijan_gp_prediction.png" width="45%" title="Prediction" />
-  <img src="other_media/azerbaijan_gp_result.png" width="45%" title="Actual Result" />
+  <img src="outputs/2026_azerbaijan_gp/act3_azerbaijan_gp_prediction.png" width="45%" alt="Azerbaijan GP prediction" title="Prediction" />
+  <img src="other_media/azerbaijan_gp_result.png" width="45%" alt="Azerbaijan GP actual result" title="Actual Result" />
 </p>
 
 
@@ -52,7 +52,10 @@ The model uses completed rounds of the 2026 season and the target qualifying ses
 * **Actual Top 5:** TBD
 * **Result:** TBD
 
-![Bahrain GP Prediction vs Reality](outputs/2026_bahrain_gp/act3_bahrain_gp_prediction.png)
+<p align="center">
+  <img src="outputs/2026_bahrain_gp/act3_bahrain_gp_prediction.png" width="45%" alt="Bahrain GP prediction" title="Prediction" />
+  <img src="other_media/bahrain_gp_result.png" width="45%" alt="Bahrain GP actual result" title="Actual Result" />
+</p>
 
 
 ---
@@ -63,7 +66,10 @@ The model uses completed rounds of the 2026 season and the target qualifying ses
 * **Predicted Top 5:** 1. Verstappen, 2. Antonelli, 3. Leclerc, 4. Hamilton, 5. Norris.
 * **Validation:** Walk-forward ensemble MAE **2.31 positions**, R² **0.673**, evaluated on rounds 2–16 using only earlier rounds for each fold.
 
-![Singapore GP Prediction](outputs/2026_singapore_gp/act3_singapore_gp_prediction.png)
+<p align="center">
+  <img src="outputs/2026_singapore_gp/act3_singapore_gp_prediction.png" width="45%" alt="Singapore GP prediction" title="Prediction" />
+  <img src="other_media/singapore_gp_result.png" width="45%" alt="Singapore GP actual result" title="Actual Result" />
+</p>
 
 The existing pipeline now targets Singapore. All new artifacts are in `outputs/2026_singapore_gp/`, including qualifying and adjusted-grid CSVs, training and prediction feature matrices, validation predictions, charts, and the prediction report. Previous event outputs remain available in their existing folders. FastF1's local cache is ignored by Git.
 
