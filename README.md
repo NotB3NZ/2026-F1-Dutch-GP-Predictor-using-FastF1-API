@@ -48,9 +48,9 @@ The model uses completed rounds of the 2026 season and the target qualifying ses
 
 
 ### 🇧🇭 Bahrain GP (Round 16, Sepang)
-* **Predicted Top 5:** 1. Antonelli, 2. Verstappen, 3. Leclerc, 4. Russell, 5. Norris
-* **Actual Top 5:** TBD
-* **Result:** TBD
+* **Predicted Top 5:** 1. Antonelli, 2. Verstappen, 3. Leclerc
+* **Actual Top 5:** 1. Verstappen, 2. Antonelli, 3. Hamilton
+* **Result:** **2/3 on the podium** (Verstappen and Antonelli)! The model correctly identified Verstappen and Antonelli as podium contenders.
 
 <p align="center">
   <img src="outputs/2026_bahrain_gp/act3_bahrain_gp_prediction.png" width="45%" alt="Bahrain GP prediction" title="Prediction" />
@@ -61,10 +61,9 @@ The model uses completed rounds of the 2026 season and the target qualifying ses
 ---
 
 ### 🇸🇬 Singapore GP (Round 17)
-* **Training:** All 16 main races, Australia through Bahrain; 352 driver-race entries, with 278 finishers used as training targets.
-* **Prediction inputs:** Cached Singapore **Q** classification, plus the [official pre-race grid](https://www.formula1.com/en/results/2026/races/1296/singapore/starting-grid). No Singapore race, sprint, or sprint qualifying results are used.
-* **Predicted Top 5:** 1. Verstappen, 2. Antonelli, 3. Leclerc, 4. Hamilton, 5. Norris.
-* **Validation:** Walk-forward ensemble MAE **2.31 positions**, R² **0.673**, evaluated on rounds 2–16 using only earlier rounds for each fold.
+* **Predicted Top 5:** 1. Verstappen, 2. Antonellli, 3. Leclerc
+* **Actual Top 5:** 1. Verstappen, 2. Leclerc, 3. Antonelli
+* **Result:** **3/3 ON THE PODIUM!!!** Although we did not get the placements right, its the first time we got all 3 drivers on the podium correct.
 
 <p align="center">
   <img src="outputs/2026_singapore_gp/act3_singapore_gp_prediction.png" width="45%" alt="Singapore GP prediction" title="Prediction" />
