@@ -1,6 +1,6 @@
 # 🏎️ FastF1 2026 Race Predictor
 
-A live, machine-learning-powered prediction pipeline for the **2026 Formula 1 Season**. Initially built for the Dutch Grand Prix (Round 12) and subsequently expanded to predict the Italian (Round 13), Spanish (Round 14), Azerbaijan (Round 15), and Bahrain (Round 16) Grands Prix.
+A live, machine-learning-powered prediction pipeline for the **2026 Formula 1 Season**. Initially built for the Dutch Grand Prix (Round 12) and subsequently expanded to predict the Italian (Round 13), Spanish (Round 14), Azerbaijan (Round 15), Bahrain (Round 16), and Singapore (Round 17) Grands Prix.
 
 Built using `fastf1`, `pandas`, and `scikit-learn`, this model leverages a Random Forest + Linear Regression ensemble to predict race day finishing orders based purely on current-season pace, telemetry, and reliability metrics.
 
@@ -10,7 +10,7 @@ Built using `fastf1`, `pandas`, and `scikit-learn`, this model leverages a Rando
 
 ## Prediction vs. Reality (The Results)
 
-The model is generated *before* each race using only data from the completed rounds of the 2026 season and the confirmed starting grid from the qualifying session. I intentionally removed historical pre-2026 data to avoid bias from old car regulations. This was a deliberate choice to force the model to learn only from the current season and the new regulations in place for 2026.
+The model uses completed rounds of the 2026 season and the target qualifying session, with published pre-race grid adjustments. The Singapore run is a retrospective forecast generated after the event; its race and sprint results are excluded. I intentionally removed historical pre-2026 data to avoid bias from old car regulations. This was a deliberate choice to force the model to learn only from the current season and the new regulations in place for 2026.
 
 ### 🇳🇱 Dutch GP (Round 12)
 * **Predicted Top 5:** 1. Norris, 2. Russell, 3. Antonelli, 4. Piastri, 5. Hamilton
@@ -57,30 +57,42 @@ The model is generated *before* each race using only data from the completed rou
 
 ---
 
+### 🇸🇬 Singapore GP (Round 17)
+* **Training:** All 16 main races, Australia through Bahrain; 352 driver-race entries, with 278 finishers used as training targets.
+* **Prediction inputs:** Cached Singapore **Q** classification, plus the [official pre-race grid](https://www.formula1.com/en/results/2026/races/1296/singapore/starting-grid). No Singapore race, sprint, or sprint qualifying results are used.
+* **Predicted Top 5:** 1. Verstappen, 2. Antonelli, 3. Leclerc, 4. Hamilton, 5. Norris.
+* **Validation:** Walk-forward ensemble MAE **2.31 positions**, R² **0.673**, evaluated on rounds 2–16 using only earlier rounds for each fold.
+
+![Singapore GP Prediction](outputs/2026_singapore_gp/act3_singapore_gp_prediction.png)
+
+The existing pipeline now targets Singapore. All new artifacts are in `outputs/2026_singapore_gp/`, including qualifying and adjusted-grid CSVs, training and prediction feature matrices, validation predictions, charts, and the prediction report. Previous event outputs remain available in their existing folders. FastF1's local cache is ignored by Git.
+
+---
+
 ## 📊 Act 1 — 2026 Pace Gap & Season Trends
 
-**Goal:** Calculate `PositionsGained = GridPosition - FinishPosition` across the 15 completed 2026 races to identify over/underperformers and establish reliability baselines.
+**Goal:** Calculate `PositionsGained = GridPosition - FinishPosition` across the 16 completed 2026 races to identify over/underperformers and establish reliability baselines.
 
 **Key findings:**
-- **Verstappen (+2.75 avg)** consistently gains places on race day.
-- **Antonelli (-0.80 avg)** and **Russell (-0.78 avg)** underperform their grid slots slightly, largely because they qualify at the very front with less room to gain.
-- **18.2% DNF rate** across the season establishes a high baseline for mechanical failures and crashes in 2026.
+- **Verstappen (+2.58 avg)** consistently gains places on race day.
+- **Antonelli (+1.60 avg)** gains places on average; **Russell (-0.54 avg)** loses slightly relative to his grid position.
+- **21.0% DNF/non-start rate** across the season establishes a high baseline for mechanical failures and crashes in 2026.
 
-![Positions Gained Heatmap](outputs/2026_bahrain_gp/act1_positions_gained_heatmap.png)
+![Positions Gained Heatmap](outputs/2026_singapore_gp/act1_positions_gained_heatmap.png)
 *Heatmap of positions gained and lost by driver across the 2026 season.*
 
 ---
 
 ## 🏁 Act 2 — Track Dominance
 
-**Goal:** Compare the top two front-row starters using fastest-lap telemetry purely from the target Qualifying session (e.g. Verstappen vs Hamilton at Bahrain).
+**Goal:** Compare the top two front-row starters using fastest-lap telemetry purely from the target Qualifying session (Verstappen vs Leclerc at Singapore).
 
 **Key insight:** By analyzing 2026 telemetry, we identified exactly where the pole-sitter was pulling ahead in micro-segments of the track.
 
-![Track Dominance Map](outputs/2026_bahrain_gp/act2_track_dominance_VER_vs_HAM_Q.png)
+![Track Dominance Map](outputs/2026_singapore_gp/act2_track_dominance_VER_vs_LEC_Q.png)
 *Track dominance map highlighting which driver was faster in micro-segments of the track.*
 
-![Speed Comparison](outputs/2026_bahrain_gp/act2_speed_comparison_VER_vs_HAM_Q.png)
+![Speed Comparison](outputs/2026_singapore_gp/act2_speed_comparison_VER_vs_LEC_Q.png)
 *Telemetry speed comparison trace during their fastest Q3 laps.*
 
 ---
@@ -89,12 +101,12 @@ The model is generated *before* each race using only data from the completed rou
 
 **Goal:** Predict the finishing order for all 22 drivers in the upcoming GP.
 
-**Model:** Random Forest + Linear Regression ensemble, trained on the completed 2026 races (currently 15 races).
+**Model:** Random Forest + Linear Regression ensemble, trained on the completed 2026 races (currently 16 races).
 
 **Features (all knowable before race start):**
 | Feature | Description |
 |---------|-------------|
-| `GridPosition` | Confirmed qualifying position (no penalties) |
+| `GridPosition` | Qualifying-derived starting position with published penalties |
 | `DriverHistoricalGain` | Avg positions gained in 2026 (from Act 1) |
 | `TeamRollingPoints` | Team's cumulative 2026 points |
 | `DriverCompletionRate` | Reliability proxy (from Act 1) |
@@ -104,12 +116,12 @@ The model is generated *before* each race using only data from the completed rou
 
 *(Note: Historical performances from previous years are actively removed from the model to prevent massive historical bias from old regulations).*
 
-**Training Quality (LOO-CV on 15 races):**
-* **MAE:** 2.56 positions
-* **R²:** 0.584
-* **Podium accuracy:** 89%
+**Walk-forward validation of the ensemble (test rounds 2–16):**
+* **MAE:** 2.31 positions
+* **R²:** 0.673
+* **Podium/non-podium classification accuracy:** 87% (includes non-podium drivers; not full-podium hit rate)
 
-![Feature Importance](outputs/2026_bahrain_gp/act3_feature_importance.png)
+![Feature Importance](outputs/2026_singapore_gp/act3_feature_importance.png)
 *Random Forest feature importance ranking.*
 
 ---
@@ -122,7 +134,7 @@ fastf1-dutch-gp-2026/
 │   ├── config.py                 # Season config, starting grid, team colors
 │   ├── data_loader.py            # FastF1 caching + session loading
 │   ├── act1_pace_gap.py          # Act 1: Qualifying vs race performance
-│   ├── act2_track_dominance.py   # Act 2: Zandvoort telemetry comparison
+│   ├── act2_track_dominance.py   # Act 2: Singapore qualifying telemetry
 │   └── act3_predictor.py         # Act 3: Race prediction model
 │
 ├── outputs/                      # Generated charts, CSVs, reports
@@ -150,7 +162,7 @@ pip install -r requirements.txt
 
 ## 🚀 How to Run
 
-Run each Act in order — Act 3 depends on Act 1's output. Make sure you use the virtual environment!
+Run each Act in order — Act 3 depends on Act 1's output. Act 1 requires every round from 1 through 16 and stops if a race is unavailable. Driver statistics span team changes, and DNFs and non-starters are excluded from finishing-position targets. Make sure you use the virtual environment!
 
 ```bash
 # Act 1: 2026 Season Pace Gap
@@ -163,7 +175,7 @@ Run each Act in order — Act 3 depends on Act 1's output. Make sure you use the
 .venv/bin/python -m src.act3_predictor
 ```
 
-All outputs and charts are saved to the `outputs/<event_name>/` directory.
+All outputs and charts are saved to `outputs/2026_singapore_gp/`. Singapore qualifying is cached automatically when Acts 2 or 3 load it. Pit-lane starters use effective positions 20–22; the model does not estimate a separate pit-lane time loss. The seven-feature model uses qualifying through starting position; Q lap times and telemetry are exported/analyzed but are not additional trained features.
 
 ---
 

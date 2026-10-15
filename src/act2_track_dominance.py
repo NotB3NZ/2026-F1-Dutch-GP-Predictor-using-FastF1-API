@@ -1,12 +1,12 @@
 """
-ACT 2: BAHRAIN TRACK DOMINANCE MAP
+ACT 2: SINGAPORE TRACK DOMINANCE MAP
 
 Adapted from the 2023 project's act2_dominance_map.py with these changes:
-- Evaluates the current 2026 weekend sessions (FP1, FP2, FP3, Q) purely on 2026 data
+- Evaluates the current 2026 weekend sessions (Q) purely on 2026 data
 - Produces a dominance map + speed trace per session
 - Generates a sector-level summary
 
-Default comparison: VER vs HAM (pole-sitter vs P2 qualifier at Bahrain)
+Default comparison: VER vs LEC (pole-sitter vs P2 qualifier at Singapore)
 
 OUTPUTS:
 - act2_track_dominance_{D1}_vs_{D2}_{SESSION}.png — Track map per session
@@ -29,9 +29,10 @@ from matplotlib.collections import LineCollection
 from src.config import (
     FIGURE_DPI,
     OUTPUT_DIR,
-    BAHRAIN_SESSIONS,
+    TARGET_SESSIONS,
     TEAM_COLORS_2026,
     SEASON,
+    TARGET_EVENT,
 )
 from src.data_loader import init_cache, load_session
 
@@ -47,8 +48,8 @@ logger = logging.getLogger(__name__)
 # ----------------------------------------------------------
 
 DRIVER_1 = "VER"  # Pole position holder
-DRIVER_2 = "HAM"  # P2 qualifier
-EVENT_NAME = "Bahrain Grand Prix"
+DRIVER_2 = "LEC"  # P2 qualifier
+EVENT_NAME = TARGET_EVENT
 
 
 
@@ -317,12 +318,12 @@ def main(
     driver2: str = DRIVER_2,
     event: str = EVENT_NAME,
 ):
-    #Run the full Act 2 pipeline across 2026 Baku sessions.
+    #Run the full Act 2 pipeline across the target qualifying session.
 
     print(f"\n{'='*60}")
-    print(f"  ACT 2 — Bahrain Track Dominance Map")
+    print(f"  ACT 2 — Singapore Track Dominance Map")
     print(f"  {driver1} vs {driver2} | {SEASON} {event}")
-    print(f"  Sessions: {BAHRAIN_SESSIONS}")
+    print(f"  Sessions: {TARGET_SESSIONS}")
     print(f"{'='*60}\n")
 
     init_cache()
@@ -330,7 +331,7 @@ def main(
     all_sector_data = []
     year = SEASON
 
-    for session_type in BAHRAIN_SESSIONS:
+    for session_type in TARGET_SESSIONS:
         print(f"\n--- {year} {event} {session_type} ---")
 
         # Load session

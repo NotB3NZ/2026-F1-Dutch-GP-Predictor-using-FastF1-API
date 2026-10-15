@@ -1,0 +1,4 @@
+Year,Session,Sector,Driver1,Driver2,VER_FasterPct,LEC_FasterPct,AvgSpeedDelta_kmh,DominantDriver
+2026,Q,S1,VER,LEC,72.3,27.7,0.3,VER
+2026,Q,S2,VER,LEC,61.4,38.6,-2.7,VER
+2026,Q,S3,VER,LEC,78.6,21.4,2.1,VER

@@ -3,11 +3,11 @@ ACT 1: QUALIFYING VS RACE PACE GAP ANALYSIS (2026 SEASON)
 
 Same approach as the validated 2023 project:
 - PositionsGained = GridPosition - Position (positive = overperformed)
-- DNFs EXCLUDED from pace gap averages but tracked as reliability metric
-- Only main race day results (no sprints), so grid = qualifying position
+- DNFs and non-starters excluded from pace averages, tracked as reliability
+- Only main race results (no sprints); starting grid includes penalties
 
-Scoped to the 15 completed 2026 races (Australia → Azerbaijan GP).
-Output feeds into Act 3 as a feature/context input for the Bahrain GP.
+Scoped to the 16 completed 2026 races (Australia → Bahrain GP).
+Output feeds into Act 3 as a feature/context input for the Singapore GP.
 
 OUTPUTS:
 - act1_avg_positions_gained.png  — Ranked bar chart of season averages
@@ -85,7 +85,8 @@ def prepare_race_data(raw_results: pd.DataFrame) -> pd.DataFrame:
         df["Position"].isna()
         | (df["Position"] == 0)
         | df["Status"].str.contains(
-            r"Retired|Accident|Collision|Spun off|Damage|Engine|Gearbox|"
+            r"Did not start|Did not qualify|Not classified|Retired|Accident|"
+            r"Collision|Spun off|Damage|Engine|Gearbox|"
             r"Hydraulic|Electrical|Mechanical|Withdrew|Disqualified|Excluded",
             case=False,
             na=False,
@@ -107,8 +108,9 @@ def aggregate_season_stats(per_race: pd.DataFrame) -> pd.DataFrame:
     # Aggregate per-race data into season-level stats per driver.
 
     stats = (
-        per_race.groupby(["Abbreviation", "TeamName"])
+        per_race.sort_values("RoundNumber").groupby("Abbreviation")
         .agg(
+            TeamName=("TeamName", "last"),
             AvgPositionsGained=("PositionsGained", "mean"),
             StdPositionsGained=("PositionsGained", "std"),
             MedianPositionsGained=("PositionsGained", "median"),
@@ -426,15 +428,15 @@ def main():
     export_csvs(stats, per_race)
 
     print(f"\n{'='*60}")
-    print("  Act 1 complete! Outputs saved to outputs/")
+    print(f"  Act 1 complete! Outputs saved to {OUTPUT_DIR}/")
     print(f"{'='*60}")
     print(f"\n  Charts:")
-    print(f"    • outputs/act1_avg_positions_gained.png")
-    print(f"    • outputs/act1_positions_gained_heatmap.png")
-    print(f"    • outputs/act1_dnf_reliability.png")
+    print(f"    • {OUTPUT_DIR}/act1_avg_positions_gained.png")
+    print(f"    • {OUTPUT_DIR}/act1_positions_gained_heatmap.png")
+    print(f"    • {OUTPUT_DIR}/act1_dnf_reliability.png")
     print(f"  Data:")
-    print(f"    • outputs/act1_results.csv")
-    print(f"    • outputs/act1_per_race.csv")
+    print(f"    • {OUTPUT_DIR}/act1_results.csv")
+    print(f"    • {OUTPUT_DIR}/act1_per_race.csv")
     print()
 
     return stats, per_race

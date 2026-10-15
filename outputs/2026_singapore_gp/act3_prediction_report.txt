@@ -1,0 +1,72 @@
+======================================================================
+  🏁 2026 SINGAPORE GRAND PRIX — RACE PREDICTION REPORT
+  Generated: 2026-10-15 12:44
+  Model: Random Forest + Linear Regression Ensemble
+  Training: 2026 Season, Rounds 1–16 (16 races)
+  Prediction inputs: Singapore Q + published pre-race grid adjustments
+  Singapore R, S and SQ are excluded from training and prediction inputs.
+  Retrospective forecast generated after the event, using pre-race inputs.
+  Grid source: https://www.formula1.com/en/results/2026/races/1296/singapore/starting-grid
+======================================================================
+
+PREDICTED PODIUM
+----------------------------------------------------------------------
+  🥇 P1: Max Verstappen (Red Bull Racing) — Grid P1 (+0)
+  🥈 P2: Kimi Antonelli (Mercedes) — Grid P4 (+2)
+  🥉 P3: Charles Leclerc (Ferrari) — Grid P2 (-1)
+
+FULL PREDICTED FINISHING ORDER
+----------------------------------------------------------------------
+  P 1: Max Verstappen         (Red Bull Racing   ) Grid P 1 (+0) ⚠ DNF risk
+  P 2: Kimi Antonelli         (Mercedes          ) Grid P 4 (+2)
+  P 3: Charles Leclerc        (Ferrari           ) Grid P 2 (-1)
+  P 4: Lewis Hamilton         (Ferrari           ) Grid P 3 (-1)
+  P 5: Lando Norris           (McLaren           ) Grid P 5 (+0) ⚠ DNF risk
+  P 6: Oscar Piastri          (McLaren           ) Grid P 6 (+0) ⚠ DNF risk
+  P 7: Pierre Gasly           (Alpine            ) Grid P 7 (+0)
+  P 8: George Russell         (Mercedes          ) Grid P19 (+11)
+  P 9: Liam Lawson            (Racing Bulls      ) Grid P 8 (-1)
+  P10: Arvid Lindblad         (Racing Bulls      ) Grid P 9 (-1)
+  P11: Isack Hadjar           (Red Bull Racing   ) Grid P22 (+11) ⚠ DNF risk
+  P12: Nico Hulkenberg        (Audi              ) Grid P10 (-2) ⚠ DNF risk
+  P13: Oliver Bearman         (Haas F1 Team      ) Grid P11 (-2) ⚠ DNF risk
+  P14: Esteban Ocon           (Haas F1 Team      ) Grid P12 (-2) ⚠ DNF risk
+  P15: Gabriel Bortoleto      (Audi              ) Grid P14 (-1) ⚠ DNF risk
+  P16: Franco Colapinto       (Alpine            ) Grid P15 (-1)
+  P17: Carlos Sainz           (Williams          ) Grid P13 (-4) ⚠ DNF risk
+  P18: Alexander Albon        (Williams          ) Grid P16 (-2) ⚠ DNF risk
+  P19: Fernando Alonso        (Aston Martin      ) Grid P20 (+1) ⚠ DNF risk
+  P20: Lance Stroll           (Aston Martin      ) Grid P21 (+1) ⚠ DNF risk
+  P21: Sergio Perez           (Cadillac          ) Grid P17 (-4) ⚠ DNF risk
+  P22: Valtteri Bottas        (Cadillac          ) Grid P18 (-4) ⚠ DNF risk
+
+MODEL CONFIDENCE (Walk-Forward Ensemble Validation)
+----------------------------------------------------------------------
+  MAE:  2.31 positions (average prediction error)
+  RMSE: 2.96 positions
+  R²:   0.673
+  Within ±1 position: 24%
+  Within ±3 positions: 73%
+  Podium/non-podium classification accuracy: 87%
+
+RACE-DAY CONTEXT & UNCERTAINTY FACTORS
+----------------------------------------------------------------------
+  Weather: Weather is not a model input; heat, humidity and rain remain uncertainties.
+
+  Track character: Marina Bay street circuit; the model has no circuit-specific feature.
+
+  Qualifying: Verstappen qualified first, ahead of Leclerc and Hamilton.
+
+  Grid adjustments: Russell received a 60-place power-unit penalty. Alonso, Stroll and Hadjar are pit-lane starters, represented as effective grid positions 20–22. Hadjar was permitted to start without a qualifying time.
+
+LIMITATIONS
+----------------------------------------------------------------------
+  • Training excludes DNFs and non-starters; predicted ranks assume drivers finish normally.
+  • Team DNF rates are historical context, not individual DNF predictions.
+  • Weather, safety cars, strategy and track-specific effects are not modeled.
+  • Pit-lane starts use effective positions 20–22, without a separate time penalty.
+  • Validation trains on earlier rounds only, testing rounds 2–16.
+    R1 has no earlier training fold; all 16 races feed the final model.
+  • Podium classification includes non-podium drivers and is not a probability
+    of predicting the full podium. Validation scores are continuous positions;
+    the final finishing order ranks the ensemble scores across all drivers.

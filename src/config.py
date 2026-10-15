@@ -1,5 +1,5 @@
 
-# Configuration for the 2026 Bahrain GP (Sepang) Predictor.
+# Configuration for the 2026 Singapore GP Predictor.
 
 from pathlib import Path
 
@@ -9,7 +9,7 @@ from pathlib import Path
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
 
 CACHE_DIR = PROJECT_ROOT / "cache"
-OUTPUT_DIR = PROJECT_ROOT / "outputs" / "2026_bahrain_gp"
+OUTPUT_DIR = PROJECT_ROOT / "outputs" / "2026_singapore_gp"
 NOTEBOOKS_DIR = PROJECT_ROOT / "notebooks"
 
 for d in [CACHE_DIR, OUTPUT_DIR, NOTEBOOKS_DIR]:
@@ -19,12 +19,12 @@ for d in [CACHE_DIR, OUTPUT_DIR, NOTEBOOKS_DIR]:
 # Season and event configuration
 
 SEASON = 2026
-TARGET_EVENT = "Bahrain Grand Prix"
-TARGET_ROUND = 16
-COMPLETED_ROUNDS = 15  # Australia → Azerbaijan GP (rounds 1–15 are finished)
+TARGET_EVENT = "Singapore Grand Prix"
+TARGET_ROUND = 17
+COMPLETED_ROUNDS = 16  # Australia → Bahrain; Singapore race results are excluded.
 
-# 2026 Bahrain sessions for Act 2 track dominance analysis
-BAHRAIN_SESSIONS = ["FP1", "FP2", "FP3", "Q"]
+# Only the target qualifying session is used for Act 2.
+TARGET_SESSIONS = ["Q"]
 
 # Session type identifiers used by FastF1
 SESSION_RACE = "R"
@@ -35,70 +35,25 @@ SESSION_FP2 = "FP2"
 SESSION_FP3 = "FP3"
 
 
-# 2026 Bahrain GP Starting Grid (from qualifying + grid penalties)
-
-# Source: FIA race classification grid positions, October 2026.
-# Verstappen on pole (1:35.130), Hamilton P2, Antonelli P3.
-# Hadjar initially P3 but dropped to P8 due to power unit penalty.
-# Colapinto P21 (15-place penalty: 5 for Baku collision, 10 for PU).
-# Lindblad P22 (30-place penalty for PU elements).
-
-STARTING_GRID = [
-    {"grid": 1,  "driver": "VER", "full_name": "Max Verstappen",       "team": "Red Bull Racing"},
-    {"grid": 2,  "driver": "HAM", "full_name": "Lewis Hamilton",       "team": "Ferrari"},
-    {"grid": 3,  "driver": "ANT", "full_name": "Kimi Antonelli",       "team": "Mercedes"},
-    {"grid": 4,  "driver": "LEC", "full_name": "Charles Leclerc",      "team": "Ferrari"},
-    {"grid": 5,  "driver": "NOR", "full_name": "Lando Norris",         "team": "McLaren"},
-    {"grid": 6,  "driver": "PIA", "full_name": "Oscar Piastri",        "team": "McLaren"},
-    {"grid": 7,  "driver": "RUS", "full_name": "George Russell",       "team": "Mercedes"},
-    {"grid": 8,  "driver": "HAD", "full_name": "Isack Hadjar",         "team": "Red Bull Racing"},
-    {"grid": 9,  "driver": "GAS", "full_name": "Pierre Gasly",         "team": "Alpine"},
-    {"grid": 10, "driver": "BOR", "full_name": "Gabriel Bortoleto",    "team": "Audi"},
-    {"grid": 11, "driver": "LAW", "full_name": "Liam Lawson",          "team": "Racing Bulls"},
-    {"grid": 12, "driver": "ALO", "full_name": "Fernando Alonso",      "team": "Aston Martin"},
-    {"grid": 13, "driver": "SAI", "full_name": "Carlos Sainz",         "team": "Williams"},
-    {"grid": 14, "driver": "STR", "full_name": "Lance Stroll",         "team": "Aston Martin"},
-    {"grid": 15, "driver": "HUL", "full_name": "Nico Hulkenberg",      "team": "Audi"},
-    {"grid": 16, "driver": "BEA", "full_name": "Oliver Bearman",       "team": "Haas F1 Team"},
-    {"grid": 17, "driver": "OCO", "full_name": "Esteban Ocon",         "team": "Haas F1 Team"},
-    {"grid": 18, "driver": "ALB", "full_name": "Alexander Albon",      "team": "Williams"},
-    {"grid": 19, "driver": "BOT", "full_name": "Valtteri Bottas",      "team": "Cadillac"},
-    {"grid": 20, "driver": "PER", "full_name": "Sergio Pérez",         "team": "Cadillac"},
-    {"grid": 21, "driver": "COL", "full_name": "Franco Colapinto",     "team": "Alpine"},
-    {"grid": 22, "driver": "LIN", "full_name": "Arvid Lindblad",       "team": "Racing Bulls"},
+# Pre-race grid adjustments; driver identities and qualifying positions come
+# from the cached Singapore Q session, never from Singapore race results.
+# Source: https://www.formula1.com/en/results/2026/races/1296/singapore/starting-grid
+GRID_SOURCE = "https://www.formula1.com/en/results/2026/races/1296/singapore/starting-grid"
+STARTING_ORDER = [
+    "VER", "LEC", "HAM", "ANT", "NOR", "PIA", "GAS", "LAW", "LIN",
+    "HUL", "BEA", "OCO", "SAI", "BOR", "COL", "ALB", "PER", "BOT",
+    "RUS", "ALO", "STR", "HAD",
 ]
-
-# Driver → Team mapping for Round 16 specifically
-
-DRIVER_TEAM_MAP_R16 = {entry["driver"]: entry["team"] for entry in STARTING_GRID}
-
-
-# Race-day context flags 
+PIT_LANE_STARTERS = {"ALO", "STR", "HAD"}
 
 RACE_DAY_NOTES = {
-    "weather": (
-        "Hot and humid conditions expected at Sepang. High chance of "
-        "late afternoon thunderstorms, typical for the Malaysian climate."
-    ),
-    "track_character": (
-        "The Sepang International Circuit is a high-speed, flowing track "
-        "with long straights and fast sweeping corners. Tire degradation "
-        "is expected to be very high due to the abrasive surface and high "
-        "track temperatures. The two long straights back-to-back offer "
-        "excellent overtaking opportunities."
-    ),
-    "verstappen_pole": (
-        "Max Verstappen claims his first pole position of the 2026 season, "
-        "putting Red Bull in a strong position on a track that demands aero efficiency."
-    ),
+    "weather": "Weather is not a model input; heat, humidity and rain remain uncertainties.",
+    "track_character": "Marina Bay street circuit; the model has no circuit-specific feature.",
+    "qualifying": "Verstappen qualified first, ahead of Leclerc and Hamilton.",
     "grid_penalties": (
-        "Isack Hadjar dropped from P3 to P8 due to PU penalties. Colapinto "
-        "and Lindblad start at the back after heavy penalties for PU changes "
-        "and collisions."
-    ),
-    "location_change": (
-        "The Bahrain Grand Prix was relocated to the Sepang International "
-        "Circuit in Malaysia due to regional tensions in the Middle East."
+        "Russell received a 60-place power-unit penalty. Alonso, Stroll and Hadjar "
+        "are pit-lane starters, represented as effective grid positions 20–22. "
+        "Hadjar was permitted to start without a qualifying time."
     ),
 }
 

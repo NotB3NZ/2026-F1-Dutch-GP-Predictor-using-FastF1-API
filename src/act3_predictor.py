@@ -1,8 +1,8 @@
 """
-ACT 3: 2026 BAHRAIN GRAND PRIX (SEPANG) RACE PREDICTOR
+ACT 3: 2026 SINGAPORE GRAND PRIX RACE PREDICTOR
 
 Trains a Random Forest + Linear Regression ensemble on the 2026 season 
-(Rounds 1-15) to predict the finishing order for the Bahrain GP (Round 16).
+(Rounds 1-16) to predict the finishing order for the Singapore GP (Round 17).
 
 Usage:
     .venv/bin/python -m src.act3_predictor
@@ -19,7 +19,6 @@ import pandas as pd
 from sklearn.ensemble import RandomForestRegressor
 from sklearn.linear_model import LinearRegression
 from sklearn.metrics import mean_absolute_error, mean_squared_error, r2_score
-from sklearn.model_selection import LeaveOneGroupOut
 
 from src.config import (
     COMPLETED_ROUNDS,
@@ -29,9 +28,8 @@ from src.config import (
     POINTS_MAP,
     RACE_DAY_NOTES,
     SEASON,
-    STARTING_GRID,
     TARGET_EVENT,
-    TARGET_ROUND,
+    GRID_SOURCE,
     TEAM_COLORS_2026,
 )
 from src.data_loader import get_starting_grid
@@ -71,13 +69,20 @@ def load_act1_data():
 
     per_race = pd.read_csv(per_race_path)
     stats = pd.read_csv(stats_path)
+    expected_rounds = set(range(1, COMPLETED_ROUNDS + 1))
+    if set(per_race["RoundNumber"]) != expected_rounds:
+        raise ValueError("Act 1 data must contain exactly rounds 1–16; rerun Act 1")
+    if per_race.duplicated(["RoundNumber", "Abbreviation"]).any():
+        raise ValueError("Duplicate driver/race rows in Act 1 data")
     logger.info(f"Loaded Act 1 data: {len(per_race)} per-race rows, {len(stats)} driver stats")
     return per_race, stats
 
 
 def build_training_features(per_race: pd.DataFrame) -> pd.DataFrame:
-    # Engineer features for each driver-race in the training data (rounds 1–14).
+    # Engineer features for each driver-race in the training data (rounds 1–16).
     df = per_race.copy()
+    if not df["RoundNumber"].between(1, COMPLETED_ROUNDS).all():
+        raise ValueError("Training data contains a round outside the pre-Singapore cutoff")
 
     df["GridPosition"] = pd.to_numeric(df["GridPosition"], errors="coerce")
     df["Position"] = pd.to_numeric(df["Position"], errors="coerce")
@@ -151,7 +156,7 @@ def build_training_features(per_race: pd.DataFrame) -> pd.DataFrame:
 
     features_df = pd.DataFrame(features)
 
-    # Drop DNFs from training
+    # Drop DNFs and non-starters from training
     features_df = features_df[features_df["IsDNF"] == False].copy()  # noqa: E712
 
     # Drop rows with NaN in critical columns
@@ -167,7 +172,7 @@ def build_prediction_features(
     per_race: pd.DataFrame,
 ) -> pd.DataFrame:
     # Build feature vector for each driver in the race.
-    # Uses the FULL 14-race season data.
+    # Uses the FULL 16-race season data.
     grid = get_starting_grid()
     pred_features = []
 
@@ -185,8 +190,6 @@ def build_prediction_features(
             completion_rate = row.get("CompletionRate", 100.0)
             avg_grid = row.get("AvgGridPosition", grid_pos)
             grid_var = row.get("GridVariance", 0.0)
-            dnf_count = row.get("DNFCount", 0)
-            total_races = row.get("TotalRaces", 1)
         else:
             # Driver not in Act 1 stats (e.g., Hadjar missed 3 races)
             # Use reasonable defaults
@@ -194,10 +197,8 @@ def build_prediction_features(
             completion_rate = 100.0
             avg_grid = grid_pos
             grid_var = 0.0
-            dnf_count = 0
-            total_races = 1
 
-        # Team rolling points (full season total heading into R15)
+        # Team rolling points (full season total heading into R17)
         team_data = per_race[per_race["TeamName"].str.contains(team, case=False, na=False)]
         if team_data.empty:
             # Try partial match
@@ -222,6 +223,8 @@ def build_prediction_features(
             "FullName": entry["full_name"],
             "TeamName": team,
             "GridPosition": grid_pos,
+            "QualifyingPosition": int(entry["qualifying_position"]),
+            "PitLaneStart": bool(entry["pit_lane_start"]),
             "DriverHistoricalGain": hist_gain if pd.notna(hist_gain) else 0.0,
             "TeamRollingPoints": team_points,
             "DriverCompletionRate": completion_rate,
@@ -240,38 +243,45 @@ def build_prediction_features(
 # Model training and prediction
 def train_model(features_df: pd.DataFrame):
     # Train Random Forest on all training data and return the fitted model.
-    # Also performs Leave-One-Round-Out cross-validation for confidence calibration.
+    # Evaluate the ensemble on each round using only earlier rounds.
     
     X = features_df[FEATURE_COLS].values
     y = features_df["FinishPosition"].values
     groups = features_df["RoundNumber"].values
 
-    # Leave-One-Round-Out CV for confidence calibration
-    logo = LeaveOneGroupOut()
+    # Walk-forward validation prevents later races (and their rolling history)
+    # from leaking into the validation of an earlier race. R1 has no prior fold.
     cv_predictions = np.full(len(y), np.nan)
-
-    for train_idx, test_idx in logo.split(X, y, groups):
+    for test_round in sorted(np.unique(groups))[1:]:
+        train_idx = groups < test_round
+        test_idx = groups == test_round
         rf_cv = RandomForestRegressor(
             n_estimators=200, max_depth=8,
             min_samples_split=5, min_samples_leaf=3,
             random_state=42, n_jobs=-1,
         )
         rf_cv.fit(X[train_idx], y[train_idx])
-        cv_predictions[test_idx] = rf_cv.predict(X[test_idx])
+        lr_cv = LinearRegression().fit(X[train_idx], y[train_idx])
+        cv_predictions[test_idx] = (
+            np.clip(rf_cv.predict(X[test_idx]), 1, 22)
+            + np.clip(lr_cv.predict(X[test_idx]), 1, 22)
+        ) / 2
 
-    cv_predictions = np.clip(cv_predictions, 1, 22)
-
-    cv_mae = mean_absolute_error(y, cv_predictions)
-    cv_rmse = np.sqrt(mean_squared_error(y, cv_predictions))
-    cv_r2 = r2_score(y, cv_predictions)
+    valid = np.isfinite(cv_predictions)
+    cv_rounds = groups[valid]
+    cv_predictions = cv_predictions[valid]
+    y_cv = y[valid]
+    cv_mae = mean_absolute_error(y_cv, cv_predictions)
+    cv_rmse = np.sqrt(mean_squared_error(y_cv, cv_predictions))
+    cv_r2 = r2_score(y_cv, cv_predictions)
 
     # Podium accuracy
-    actual_podium = (y <= 3).astype(int)
+    actual_podium = (y_cv <= 3).astype(int)
     pred_podium = (cv_predictions <= 3.5).astype(int)
     podium_acc = (actual_podium == pred_podium).mean() * 100
 
-    within_1 = np.mean(np.abs(y - cv_predictions) <= 1) * 100
-    within_3 = np.mean(np.abs(y - cv_predictions) <= 3) * 100
+    within_1 = np.mean(np.abs(y_cv - cv_predictions) <= 1) * 100
+    within_3 = np.mean(np.abs(y_cv - cv_predictions) <= 3) * 100
 
     cv_metrics = {
         "MAE": cv_mae,
@@ -279,11 +289,11 @@ def train_model(features_df: pd.DataFrame):
         "R²": cv_r2,
         "Within ±1 pos (%)": within_1,
         "Within ±3 pos (%)": within_3,
-        "Podium accuracy (%)": podium_acc,
+        "Podium classification accuracy (%)": podium_acc,
     }
 
     logger.info(
-        f"LOO-CV: MAE={cv_mae:.2f}, RMSE={cv_rmse:.2f}, R²={cv_r2:.3f}, "
+        f"Walk-forward CV: MAE={cv_mae:.2f}, RMSE={cv_rmse:.2f}, R²={cv_r2:.3f}, "
         f"Podium={podium_acc:.0f}%"
     )
 
@@ -304,13 +314,14 @@ def train_model(features_df: pd.DataFrame):
         "lr_model": lr_final,
         "cv_metrics": cv_metrics,
         "cv_predictions": cv_predictions,
-        "cv_actuals": y,
+        "cv_actuals": y_cv,
+        "cv_rounds": cv_rounds,
         "feature_importances": rf_final.feature_importances_,
     }
 
 
 def generate_race_prediction(model_data: dict, pred_features: pd.DataFrame):
-    # Generate the final race prediction for the Bahrain GP at Sepang.
+    # Generate the final race prediction for the Singapore GP.
 
     X_pred = pred_features[FEATURE_COLS].values
 
@@ -323,7 +334,10 @@ def generate_race_prediction(model_data: dict, pred_features: pd.DataFrame):
     lr_pred = np.clip(lr_pred, 1, 22)
 
     # Create prediction DataFrame
-    prediction = pred_features[["Abbreviation", "FullName", "TeamName", "GridPosition"]].copy()
+    prediction = pred_features[[
+        "Abbreviation", "FullName", "TeamName", "GridPosition",
+        "QualifyingPosition", "PitLaneStart",
+    ]].copy()
     prediction["RF_PredictedPos"] = rf_pred
     prediction["LR_PredictedPos"] = lr_pred
 
@@ -335,7 +349,7 @@ def generate_race_prediction(model_data: dict, pred_features: pd.DataFrame):
         prediction["EnsemblePredictedPos"].rank(method="first").astype(int)
     )
 
-    # Sort tha shi
+    # Sort by the final rank.
     prediction = prediction.sort_values("PredictedFinish").reset_index(drop=True)
 
     # DNF%
@@ -420,7 +434,7 @@ def plot_predicted_finishing_order(prediction: pd.DataFrame) -> None:
 
     plt.tight_layout()
 
-    path = OUTPUT_DIR / "act3_bahrain_gp_prediction.png"
+    path = OUTPUT_DIR / "act3_singapore_gp_prediction.png"
     fig.savefig(path, dpi=FIGURE_DPI, bbox_inches="tight", facecolor=fig.get_facecolor())
     logger.info(f"Saved: {path}")
     plt.close(fig)
@@ -494,7 +508,7 @@ def plot_training_performance(model_data: dict) -> None:
         f"MAE: {metrics['MAE']:.2f}\n"
         f"RMSE: {metrics['RMSE']:.2f}\n"
         f"R²: {metrics['R²']:.3f}\n"
-        f"Podium: {metrics['Podium accuracy (%)']:.0f}%",
+        f"Podium classification: {metrics['Podium classification accuracy (%)']:.0f}%",
         transform=ax.transAxes, fontsize=11,
         va="top", color="white",
         bbox=dict(boxstyle="round", facecolor="#16213e", edgecolor="gray"),
@@ -503,7 +517,7 @@ def plot_training_performance(model_data: dict) -> None:
     ax.set_xlabel("Actual Position", fontsize=11, color="white")
     ax.set_ylabel("Predicted Position", fontsize=11, color="white")
     ax.set_title(
-        f"Leave-One-Round-Out Cross-Validation\n"
+        f"Walk-Forward Ensemble Validation\n"
         f"Training on {SEASON} Rounds 1–{COMPLETED_ROUNDS}",
         fontsize=13, fontweight="bold", color="white",
     )
@@ -531,10 +545,14 @@ def generate_report(prediction: pd.DataFrame, model_data: dict) -> str:
 
     lines = []
     lines.append("=" * 70)
-    lines.append("  🏁 2026 BAHRAIN GRAND PRIX (SEPANG) — RACE PREDICTION REPORT")
+    lines.append("  🏁 2026 SINGAPORE GRAND PRIX — RACE PREDICTION REPORT")
     lines.append(f"  Generated: {datetime.now().strftime('%Y-%m-%d %H:%M')}")
     lines.append(f"  Model: Random Forest + Linear Regression Ensemble")
     lines.append(f"  Training: {SEASON} Season, Rounds 1–{COMPLETED_ROUNDS} ({COMPLETED_ROUNDS} races)")
+    lines.append("  Prediction inputs: Singapore Q + published pre-race grid adjustments")
+    lines.append("  Singapore R, S and SQ are excluded from training and prediction inputs.")
+    lines.append("  Retrospective forecast generated after the event, using pre-race inputs.")
+    lines.append(f"  Grid source: {GRID_SOURCE}")
     lines.append("=" * 70)
     lines.append("")
 
@@ -567,7 +585,7 @@ def generate_report(prediction: pd.DataFrame, model_data: dict) -> str:
     lines.append("")
 
     # Model confidence
-    lines.append("MODEL CONFIDENCE (Leave-One-Round-Out Cross-Validation)")
+    lines.append("MODEL CONFIDENCE (Walk-Forward Ensemble Validation)")
     lines.append("-" * 70)
     cv = model_data["cv_metrics"]
     lines.append(f"  MAE:  {cv['MAE']:.2f} positions (average prediction error)")
@@ -575,7 +593,7 @@ def generate_report(prediction: pd.DataFrame, model_data: dict) -> str:
     lines.append(f"  R²:   {cv['R²']:.3f}")
     lines.append(f"  Within ±1 position: {cv['Within ±1 pos (%)']:.0f}%")
     lines.append(f"  Within ±3 positions: {cv['Within ±3 pos (%)']:.0f}%")
-    lines.append(f"  Podium call accuracy: {cv['Podium accuracy (%)']:.0f}%")
+    lines.append(f"  Podium/non-podium classification accuracy: {cv['Podium classification accuracy (%)']:.0f}%")
     lines.append("")
 
     # Race-day context
@@ -585,34 +603,22 @@ def generate_report(prediction: pd.DataFrame, model_data: dict) -> str:
     lines.append("")
     lines.append(f"  Track character: {RACE_DAY_NOTES['track_character']}")
     lines.append("")
-    lines.append(f"  Verstappen pole: {RACE_DAY_NOTES['verstappen_pole']}")
+    lines.append(f"  Qualifying: {RACE_DAY_NOTES['qualifying']}")
     lines.append("")
-    lines.append(f"  Location change: {RACE_DAY_NOTES['location_change']}")
+    lines.append(f"  Grid adjustments: {RACE_DAY_NOTES['grid_penalties']}")
     lines.append("")
-    lines.append(f"  Grid penalties: {RACE_DAY_NOTES['grid_penalties']}")
-    lines.append("")
-
-    # Honest limitations
-    lines.append("HONEST LIMITATIONS")
+    lines.append("LIMITATIONS")
     lines.append("-" * 70)
-    lines.append("  • DNFs from crashes/mechanical failures are inherently unpredictable.")
-    lines.append("    The model predicts 'normal' race outcomes only.")
-    lines.append("  • Sepang's extreme heat and humidity can cause unexpected power")
-    lines.append("    unit failures and high tire degradation, which aren't fully captured.")
-    lines.append("  • Strategy calls (tire choices, pit windows) are not modeled.")
-    lines.append("  • The two long back-to-back straights offer great overtaking,")
-    lines.append("    meaning grid position might matter slightly less than usual.")
-    lines.append("  • Grid penalties have pushed several fast cars down the order")
-    lines.append("    (Hadjar, Colapinto, Lindblad), increasing the likelihood of recovery drives.")
-    lines.append("  • The first corner (Turn 1 hairpin) is a common spot for incidents.")
+    lines.append("  • Training excludes DNFs and non-starters; predicted ranks assume drivers finish normally.")
+    lines.append("  • Team DNF rates are historical context, not individual DNF predictions.")
+    lines.append("  • Weather, safety cars, strategy and track-specific effects are not modeled.")
+    lines.append("  • Pit-lane starts use effective positions 20–22, without a separate time penalty.")
+    lines.append("  • Validation trains on earlier rounds only, testing rounds 2–16.")
+    lines.append("    R1 has no earlier training fold; all 16 races feed the final model.")
+    lines.append("  • Podium classification includes non-podium drivers and is not a probability")
+    lines.append("    of predicting the full podium. Validation scores are continuous positions;")
+    lines.append("    the final finishing order ranks the ensemble scores across all drivers.")
     lines.append("")
-    lines.append("BOTTOM LINE: This is a genuine pre-race forecast, not a lookback.")
-    lines.append(f"The model's LOO-CV suggests predictions are typically within")
-    lines.append(f"±{cv['MAE']:.1f} positions of actual. Treat the predicted podium as")
-    lines.append(f"the most likely outcome ({cv['Podium accuracy (%)']:.0f}% historical accuracy),")
-    lines.append(f"but expect at least 2-3 positions of shuffle from the chaos factors above.")
-    lines.append("")
-
     report = "\n".join(lines)
     return report
 
@@ -624,7 +630,7 @@ def main():
     # Run the full Act 3 pipeline: train, predict, visualize, report.
 
     print(f"\n{'='*60}")
-    print(f"  ACT 3 — 2026 Bahrain Grand Prix (Sepang) Race Predictor")
+    print(f"  ACT 3 — 2026 Singapore Grand Prix Race Predictor")
     print(f"{'='*60}\n")
 
     # Step 1: Load Act 1 data
@@ -640,9 +646,17 @@ def main():
     pred_features = build_prediction_features(stats, per_race)
     print(f"  → Prediction matrix: {pred_features.shape}\n")
 
+    train_features.to_csv(OUTPUT_DIR / "act3_training_features.csv", index=False)
+    pred_features.to_csv(OUTPUT_DIR / "act3_prediction_features.csv", index=False)
+
     # Step 3: Train model
-    print("Step 3/5: Training model (with LOO-CV)...")
+    print("Step 3/5: Training model (with walk-forward CV)...")
     model_data = train_model(train_features)
+    pd.DataFrame({
+        "RoundNumber": model_data["cv_rounds"],
+        "ActualPosition": model_data["cv_actuals"],
+        "PredictedPosition": model_data["cv_predictions"],
+    }).to_csv(OUTPUT_DIR / "act3_validation_predictions.csv", index=False)
 
     # Step 4: Generate prediction
     print("Step 4/5: Generating race prediction...")
@@ -674,15 +688,15 @@ def main():
     print("\n".join(report_lines[start_idx:end_idx]))
 
     print(f"\n{'='*60}")
-    print(f"  Act 3 complete! Outputs saved to outputs/2026_bahrain_gp/")
+    print(f"  Act 3 complete! Outputs saved to outputs/2026_singapore_gp/")
     print(f"{'='*60}")
     print(f"\n  Charts:")
-    print(f"    • outputs/2026_bahrain_gp/act3_bahrain_gp_prediction.png")
-    print(f"    • outputs/2026_bahrain_gp/act3_feature_importance.png")
-    print(f"    • outputs/2026_bahrain_gp/act3_training_performance.png")
+    print(f"    • outputs/2026_singapore_gp/act3_singapore_gp_prediction.png")
+    print(f"    • outputs/2026_singapore_gp/act3_feature_importance.png")
+    print(f"    • outputs/2026_singapore_gp/act3_training_performance.png")
     print(f"  Data:")
-    print(f"    • outputs/2026_bahrain_gp/act3_predictions.csv")
-    print(f"    • outputs/2026_bahrain_gp/act3_prediction_report.txt")
+    print(f"    • outputs/2026_singapore_gp/act3_predictions.csv")
+    print(f"    • outputs/2026_singapore_gp/act3_prediction_report.txt")
     print()
 
     return prediction, model_data
